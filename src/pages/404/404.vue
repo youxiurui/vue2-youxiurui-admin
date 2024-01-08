@@ -1,0 +1,31 @@
+<template>
+    <div id="wrong-page">
+        <el-button type="primary" class="btn">返回首页</el-button>
+    </div>
+</template>
+
+<script>
+export default {
+    
+}
+
+</script>
+
+<style scoped>
+#wrong-page {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: relative;
+    background-image: url('@/assets/images/404.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+}
+.btn{
+    position: absolute;
+    top: 70%;
+    transform: translate(-50%,0);
+}
+</style>

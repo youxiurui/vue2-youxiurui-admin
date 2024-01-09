@@ -6,7 +6,11 @@ import {
   Header,
   Aside,
   Main,
-  Button
+  Button,
+  Input,
+  Switch,
+  Form,
+  FormItem
 } from 'element-ui'
 
 Vue.config.productionTip = false
@@ -16,6 +20,10 @@ Vue.use(Header)
 Vue.use(Aside)
 Vue.use(Main)
 Vue.use(Button)
+Vue.use(Input)
+Vue.use(Switch)
+Vue.use(Form)
+Vue.use(FormItem)
 
 new Vue({
   render: h => h(App),

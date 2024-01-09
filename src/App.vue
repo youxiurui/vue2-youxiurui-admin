@@ -20,10 +20,13 @@ export default {
 }
 
 html,
-body,
-#app {
+body{
   width: 100%;
   height: 100%;
+}
+#app{
+  height: 100%;
+  min-width: 1200px;
 }
 
 </style>

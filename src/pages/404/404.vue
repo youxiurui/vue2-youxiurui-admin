@@ -15,12 +15,12 @@ export default {
 #wrong-page {
     width: 100%;
     height: 100%;
+    min-width: 1200px;
     text-align: center;
     position: relative;
     background-image: url('@/assets/images/404.png');
     background-size: contain;
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-position: center center;
 }
 .btn{

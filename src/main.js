@@ -10,7 +10,13 @@ import {
   Input,
   Switch,
   Form,
-  FormItem
+  FormItem,
+  Menu,
+  MenuItem,
+  Submenu,
+  Breadcrumb,
+  BreadcrumbItem,
+  Avatar
 } from 'element-ui'
 
 Vue.config.productionTip = false
@@ -24,6 +30,12 @@ Vue.use(Input)
 Vue.use(Switch)
 Vue.use(Form)
 Vue.use(FormItem)
+Vue.use(Menu)
+Vue.use(MenuItem)
+Vue.use(Submenu)
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
+Vue.use(Avatar)
 
 new Vue({
   render: h => h(App),

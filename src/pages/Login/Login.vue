@@ -7,7 +7,7 @@
           <el-input class="form-input" v-model="form.username" placeholder="用户名：admin"></el-input>
         </el-form-item>
         <el-form-item class="form-item" prop="userpassword">
-          <el-input class="form-input" v-model="form.userpassword" placeholder="密码：123456"></el-input>
+          <el-input class="form-input" v-model="form.userpassword" placeholder="密码：123456" show-password></el-input>
         </el-form-item>
         <el-form-item class="form-item">
           <el-switch v-model="isRemember" active-text="记住我"></el-switch>

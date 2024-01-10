@@ -14,9 +14,12 @@ import {
   Menu,
   MenuItem,
   Submenu,
+  MenuItemGroup,
+  RadioButton,
   Breadcrumb,
   BreadcrumbItem,
-  Avatar
+  Avatar,
+  RadioGroup
 } from 'element-ui'
 
 Vue.config.productionTip = false
@@ -33,9 +36,12 @@ Vue.use(FormItem)
 Vue.use(Menu)
 Vue.use(MenuItem)
 Vue.use(Submenu)
+Vue.use(MenuItemGroup)
+Vue.use(RadioButton)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
 Vue.use(Avatar)
+Vue.use(RadioGroup)
 
 new Vue({
   render: h => h(App),

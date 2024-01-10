@@ -39,10 +39,11 @@
 </template>
 
 <script>
+import headImg from '@/assets/images/head.jpg'
 export default {
     data() {
         return {
-           headImg:require('@/assets/images/head.jpg')
+           headImg:headImg
         };
     },
     methods: {

@@ -4,9 +4,9 @@
             <div class="title">
                 <span>优秀瑞</span>
             </div>
-            <div class="collapsed">
-                <i class="el-icon-s-fold"></i>
-                <!-- <i class="el-icon-s-unfold"></i> -->
+            <div class="collapsed" @click="unpack">
+                <i class="el-icon-s-fold" v-if="fold"></i>
+                <i class="el-icon-s-unfold" v-else></i>
             </div>
             <div class="nav">
                 <el-breadcrumb separator="/">
@@ -43,11 +43,21 @@ import headImg from '@/assets/images/head.jpg'
 export default {
     data() {
         return {
-           headImg:headImg
+           headImg:headImg,
+           fold:true
         };
     },
+    props: {
+        isCollapse: {
+            type: Boolean,
+            default: false
+        }
+    },
     methods: {
-       
+        unpack(){
+            this.fold = !this.fold
+            this.$emit('upIsCollapse')
+        }
     }
 }
 

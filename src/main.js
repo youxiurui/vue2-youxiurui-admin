@@ -19,7 +19,8 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   Avatar,
-  RadioGroup
+  RadioGroup,
+  Tooltip
 } from 'element-ui'
 
 Vue.config.productionTip = false
@@ -42,6 +43,7 @@ Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
 Vue.use(Avatar)
 Vue.use(RadioGroup)
+Vue.use(Tooltip)
 
 new Vue({
   render: h => h(App),

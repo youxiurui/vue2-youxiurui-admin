@@ -1,53 +1,53 @@
 <template>
-    <!-- <div class="aside"> -->
-        <el-menu default-active="1-4-1" class="el-menu-vertical-demo menu" @open="handleOpen" @close="handleClose"
-            :collapse="isCollapse" :collapse-transition="false">
-            <el-menu-item index="1">
+    <div class="aside">
+        <el-menu default-active="1-4-1" class="el-menu-vertical-demo menu" :collapse="isCollapse"
+            :collapse-transition="false" @select="changePage">
+            <el-menu-item index="home">
                 <i class="el-icon-menu"></i>
                 <span slot="title">首页</span>
             </el-menu-item>
-            <el-menu-item index="2">
+            <el-menu-item index="btnAuth">
                 <i class="el-icon-turn-off"></i>
                 <span slot="title">按钮权限</span>
             </el-menu-item>
-            <el-submenu index="3">
+            <el-submenu index="forms">
                 <template slot="title">
                     <i class="el-icon-document"></i>
                     <span slot="title">表单案例</span>
                 </template>
                 <el-menu-item-group>
-                    <el-menu-item index="3-1">
+                    <el-menu-item index="routineForm">
                         <i class="el-icon-document"></i>
                         <span>常规表单</span>
                     </el-menu-item>
-                    <el-menu-item index="3-2">
+                    <el-menu-item index="conditionForm">
                         <i class="el-icon-document"></i>
                         <span>高级表单</span>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
-            <el-submenu index="4">
+            <el-submenu index="tables">
                 <template slot="title">
                     <i class="el-icon-film"></i>
                     <span slot="title">表格案例</span>
                 </template>
                 <el-menu-item-group>
-                    <el-menu-item index="4-1">
-                        <i class="el-icon-film"></i>
-                        <span>复杂表格</span>
-                    </el-menu-item>
-                    <el-menu-item index="4-2">
+                    <el-menu-item index="routineTable">
                         <i class="el-icon-film"></i>
                         <span>常规表格</span>
                     </el-menu-item>
+                    <el-menu-item index="conditionTable">
+                        <i class="el-icon-film"></i>
+                        <span>复杂表格</span>
+                    </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
-            <el-menu-item index="5">
+            <el-menu-item index="setting">
                 <i class="el-icon-setting"></i>
                 <span slot="title">系统配置</span>
             </el-menu-item>
         </el-menu>
-    <!-- </div> -->
+    </div>
 </template>
 
 <script>
@@ -64,14 +64,13 @@ export default {
         }
     },
     methods: {
-        handleOpen(key, keyPath) {
-            console.log(key, keyPath);
-        },
-        handleClose(key, keyPath) {
-            console.log(key, keyPath);
-        },
         change() {
-            this.isCollapse =!this.isCollapse;
+            this.isCollapse = !this.isCollapse;
+        },
+        changePage(index,indexPath){
+            this.$router.push({
+                name:index
+            })
         }
     }
 }

@@ -63,7 +63,7 @@ export default {
 ::v-deep .el-header {
     background-color: ffffff;
     color: #333;
-    border-bottom: 1px solid rgb(241, 246, 254);
+    border-bottom: 1px solid #e6e6e6;
     min-width: 1200px;
 }
 
@@ -103,6 +103,6 @@ export default {
 }
 
 .el-aside-transition{
-    transition: width 0.3s ease; /* 这里的0.3s是过渡时间，您可以根据需要调整 */
+    transition: width 0.3s ease;
 }
 </style>

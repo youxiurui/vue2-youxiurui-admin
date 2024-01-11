@@ -20,6 +20,7 @@ const routes = [
         children: [
             {
                 path: '',
+                name: 'home',
                 component: () => import('@/pages/Home/Home.vue')
             }
         ]
@@ -30,6 +31,7 @@ const routes = [
         children: [
             {
                 path: '',
+                name: 'btnAuth',
                 component: () => import('@/pages/BtnAuth/BtnAuth.vue')
             }
         ]
@@ -39,11 +41,13 @@ const routes = [
         component: Layout,
         children: [
             {
-                path: 'condition',
+                path: 'conditionTable',
+                name: 'conditionTable',
                 component: () => import('@/pages/Tables/ConditionTable/ConditionTable.vue'),
             },
             {
-                path: 'routine',
+                path: 'routineTable',
+                name: 'routineTable',
                 component: () => import('@/pages/Tables/RoutineTable/RoutineTable.vue'),
             }
         ]
@@ -53,8 +57,14 @@ const routes = [
         component: Layout,
         children: [
             {
-                path: '',
-                component: () => import('@/pages/Forms/Forms.vue')
+                path: 'conditionForm',
+                name: 'conditionForm',
+                component: () => import('@/pages/Forms/ConditionForm/ConditionForm.vue')
+            },
+            {
+                path: 'routineForm',
+                name: 'routineForm',
+                component: () => import('@/pages/Forms/RoutineForm/RoutineForm.vue')
             }
         ]
     },
@@ -64,6 +74,7 @@ const routes = [
         children: [
             {
                 path: '',
+                name: 'setting',
                 component: () => import('@/pages/Setting/Setting.vue')
             }
         ]
@@ -78,5 +89,16 @@ const router = new VueRouter({
     mode: 'hash',
     routes
 })
+
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location, onResolve, onReject) {
+    if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject);
+    return originalPush.call(this, location).catch(err => {
+        if (err.name !== 'NavigationDuplicated') {
+            throw err;
+        }
+    });
+};
+
 
 export default router

@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="header-left">
-            <div class="title" @click="demo">
+            <div class="title">
                 <span>优秀瑞</span>
             </div>
             <div class="collapsed" @click="unpack">
@@ -11,14 +11,6 @@
             <div class="nav">
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item v-for="(tag, index) in tags" :key="index">{{ tag }}</el-breadcrumb-item>
-                    <!-- <el-breadcrumb-item>首页</el-breadcrumb-item> -->
-                    <!-- <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-                    <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-                    <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-                    <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-                    <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-                    <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-                    <el-breadcrumb-item>活动详情</el-breadcrumb-item> -->
                 </el-breadcrumb>
             </div>
         </div>
@@ -28,7 +20,7 @@
                     <i class="iconfont el-icon-sunny"></i>
                     <!-- <i class="el-icon-moon"></i> -->
                 </div>
-                <div class="item">
+                <div class="item" @click="fullScreen">
                     <i class="iconfont el-icon-full-screen"></i>
                 </div>
                 <div class="item">
@@ -62,7 +54,14 @@ export default {
     watch: {
         '$route': {
             handler() {
-                this.demo()
+                const { matched } = this.$route
+                const tags = []
+                matched.forEach(e => {
+                    if (e.meta.hasOwnProperty('pathName')) {
+                        tags.push(e.meta.pathName)
+                        this.tags = tags
+                    }
+                })
             },
             immediate: true
         }
@@ -72,15 +71,40 @@ export default {
             this.fold = !this.fold
             this.$emit('upIsCollapse')
         },
-        demo() {
-            const { matched } = this.$route
-            const tags = []
-            matched.forEach(e => {
-                if (e.meta.hasOwnProperty('pathName')) {
-                    tags.push(e.meta.pathName)
-                    this.tags = tags
-                }
-            })
+        isFullscreen() {
+            return document.fullscreenElement != null ||
+                document.mozFullScreenElement != null || /* Firefox */
+                document.webkitFullscreenElement != null || /* Chrome, Safari and Opera */
+                document.msFullscreenElement != null; /* IE/Edge */
+        },
+        openFullscreen() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) {
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) {
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) {
+                document.documentElement.msRequestFullscreen();
+            }
+        },
+        closeFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        },
+        fullScreen() {
+            if (this.isFullscreen()) {
+                this.closeFullscreen()
+            }else{
+                this.openFullscreen()
+            }
         }
     }
 }
@@ -107,7 +131,7 @@ export default {
 .header-left .title {
     font-size: 30px;
     flex: 0 1 auto;
-    margin:0 30px;
+    margin: 0 30px;
 }
 
 .header-left .collapsed {

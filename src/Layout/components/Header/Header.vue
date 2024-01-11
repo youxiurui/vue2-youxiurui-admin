@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="header-left">
-            <div class="title">
+            <div class="title" @click="demo">
                 <span>优秀瑞</span>
             </div>
             <div class="collapsed" @click="unpack">
@@ -10,10 +10,15 @@
             </div>
             <div class="nav">
                 <el-breadcrumb separator="/">
-                    <el-breadcrumb-item>首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+                    <el-breadcrumb-item v-for="(tag, index) in tags" :key="index">{{ tag }}</el-breadcrumb-item>
+                    <!-- <el-breadcrumb-item>首页</el-breadcrumb-item> -->
+                    <!-- <el-breadcrumb-item>活动管理</el-breadcrumb-item>
                     <el-breadcrumb-item>活动列表</el-breadcrumb-item>
                     <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+                    <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+                    <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+                    <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+                    <el-breadcrumb-item>活动详情</el-breadcrumb-item> -->
                 </el-breadcrumb>
             </div>
         </div>
@@ -43,8 +48,9 @@ import headImg from '@/assets/images/head.jpg'
 export default {
     data() {
         return {
-           headImg:headImg,
-           fold:true
+            headImg: headImg,
+            fold: true,
+            tags: []
         };
     },
     props: {
@@ -53,10 +59,28 @@ export default {
             default: false
         }
     },
+    watch: {
+        '$route': {
+            handler() {
+                this.demo()
+            },
+            immediate: true
+        }
+    },
     methods: {
-        unpack(){
+        unpack() {
             this.fold = !this.fold
             this.$emit('upIsCollapse')
+        },
+        demo() {
+            const { matched } = this.$route
+            const tags = []
+            matched.forEach(e => {
+                if (e.meta.hasOwnProperty('pathName')) {
+                    tags.push(e.meta.pathName)
+                    this.tags = tags
+                }
+            })
         }
     }
 }
@@ -71,7 +95,7 @@ export default {
 }
 
 .header-left {
-    width: 500px;
+    /* width: 500px; */
     height: 100%;
     display: flex;
     justify-content: space-around;
@@ -82,19 +106,27 @@ export default {
 
 .header-left .title {
     font-size: 30px;
+    flex: 0 1 auto;
+    margin:0 30px;
 }
-.header-left .collapsed{
+
+.header-left .collapsed {
     font-size: 25px;
     display: flex;
     flex-wrap: wrap;
     align-content: center;
     cursor: pointer;
+    flex: 0 1 auto;
+    margin-right: 30px;
 }
-.header-left .nav{
+
+.header-left .nav {
     display: flex;
     flex-wrap: wrap;
     align-content: center;
+    flex: 1 1 auto;
 }
+
 .header-right {
     /* width: 200px; */
     height: 100%;
@@ -102,18 +134,20 @@ export default {
     position: relative;
     /* background-color: aqua; */
 }
-.header-right .item-box{
+
+.header-right .item-box {
     height: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
-.header-right .item-box .item{
+
+.header-right .item-box .item {
     margin-left: 15px;
     cursor: pointer;
 }
-.iconfont{
+
+.iconfont {
     font-size: 20px;
 }
-
 </style>

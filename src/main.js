@@ -20,7 +20,8 @@ import {
   BreadcrumbItem,
   Avatar,
   RadioGroup,
-  Tooltip
+  Tooltip,
+  Message
 } from 'element-ui'
 
 Vue.config.productionTip = false
@@ -44,6 +45,9 @@ Vue.use(BreadcrumbItem)
 Vue.use(Avatar)
 Vue.use(RadioGroup)
 Vue.use(Tooltip)
+// Vue.use(Message)
+
+Vue.prototype.$message = Message
 
 new Vue({
   render: h => h(App),

@@ -73,9 +73,9 @@ export default {
         },
         isFullscreen() {
             return document.fullscreenElement != null ||
-                document.mozFullScreenElement != null || /* Firefox */
-                document.webkitFullscreenElement != null || /* Chrome, Safari and Opera */
-                document.msFullscreenElement != null; /* IE/Edge */
+                document.mozFullScreenElement != null ||
+                document.webkitFullscreenElement != null ||
+                document.msFullscreenElement != null
         },
         openFullscreen() {
             if (document.documentElement.requestFullscreen) {
@@ -102,7 +102,7 @@ export default {
         fullScreen() {
             if (this.isFullscreen()) {
                 this.closeFullscreen()
-            }else{
+            } else {
                 this.openFullscreen()
             }
         }

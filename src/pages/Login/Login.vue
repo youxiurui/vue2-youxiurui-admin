@@ -2,18 +2,18 @@
   <div id="login">
     <div class="form-box">
       <span class="title">优秀瑞</span>
-      <el-form label-position="right" :rules="rules" class="login-form" ref="form" :model="form">
+      <el-form label-position="right" :rules="rules" class="login-form" ref="ruleForm" :model="form">
         <el-form-item class="form-item" prop="username">
           <el-input class="form-input" v-model="form.username" placeholder="用户名：admin"></el-input>
         </el-form-item>
-        <el-form-item class="form-item" prop="userpassword">
-          <el-input class="form-input" v-model="form.userpassword" placeholder="密码：123456" show-password></el-input>
+        <el-form-item class="form-item" prop="password">
+          <el-input class="form-input" v-model="form.password" placeholder="密码：123456" show-password></el-input>
         </el-form-item>
         <el-form-item class="form-item">
           <el-switch v-model="isRemember" active-text="记住我"></el-switch>
         </el-form-item>
         <el-form-item>
-          <el-button class="form-btn" type="primary">登录</el-button>
+          <el-button class="form-btn" type="primary" @click="login('ruleForm')">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -26,19 +26,47 @@ export default {
     return {
       form: {
         username: '',
-        userpassword: ''
+        password: ''
       },
       isRemember: true,
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { required: true, message: '请输入用户名', trigger: 'change' },
         ],
-        userpassword: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
+        password: [
+          { required: true, message: '请输入密码', trigger: 'change' },
         ]
+      },
+      account: {
+        username: 'admin',
+        password: '123456'
       }
     }
   },
+  methods: {
+    login(formName) {
+      if (this.form.username === this.account.username && this.form.password === this.account.password) {
+        localStorage.setItem('flag','')
+        this.$router.push({
+          name: 'home'
+        })
+        this.$message({
+          message: '登录成功',
+          type: 'success'
+        })
+      } else if (this.form.username === '' || this.form.password === '') {
+        this.$message({
+          message: this.form.username === '' ? '请输入用户名' : '请输入密码',
+          type: 'warning'
+        })
+      } else {
+        this.$message({
+          message: '用户名或者密码错误',
+          type: 'error'
+        })
+      }
+    }
+  }
 }
 
 </script>
@@ -103,4 +131,5 @@ export default {
 
 ::v-deep .el-form-item__content {
   margin-left: 25px !important;
-}</style>
+}
+</style>

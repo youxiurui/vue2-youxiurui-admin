@@ -6,6 +6,7 @@ import {
   Header,
   Aside,
   Main,
+  Footer,
   Button,
   Input,
   Switch,
@@ -21,7 +22,16 @@ import {
   Avatar,
   RadioGroup,
   Tooltip,
-  Message
+  Message,
+  Popover,
+  Dropdown,
+  DropdownMenu, 
+  DropdownItem,
+  Row,
+  Col,
+  Table,
+  TableColumn,
+  Pagination
 } from 'element-ui'
 
 Vue.config.productionTip = false
@@ -30,6 +40,7 @@ Vue.use(Container)
 Vue.use(Header)
 Vue.use(Aside)
 Vue.use(Main)
+Vue.use(Footer)
 Vue.use(Button)
 Vue.use(Input)
 Vue.use(Switch)
@@ -45,7 +56,15 @@ Vue.use(BreadcrumbItem)
 Vue.use(Avatar)
 Vue.use(RadioGroup)
 Vue.use(Tooltip)
-// Vue.use(Message)
+Vue.use(Popover)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
+Vue.use(Row)
+Vue.use(Col)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Pagination)
 
 Vue.prototype.$message = Message
 

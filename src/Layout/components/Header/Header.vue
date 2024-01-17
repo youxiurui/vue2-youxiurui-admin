@@ -17,6 +17,10 @@
         <div class="header-right">
             <div class="item-box">
                 <div class="item">
+                    <i class="iconfont" :class="weatherIcon[0]"></i>
+                    <span style="position: relative;top: -1px;margin-left: 3px;">12℃</span>
+                </div>
+                <div class="item">
                     <i class="iconfont el-icon-sunny"></i>
                     <!-- <i class="el-icon-moon"></i> -->
                 </div>
@@ -27,8 +31,21 @@
                     <i class="iconfont icon-github"></i>
                 </div>
                 <div class="item">用户名</div>
-                <div class="item">
-                    <el-avatar :src="headImg"></el-avatar>
+                <div class="item" style="margin-left: 15px;">
+                    <!-- <el-avatar :src="headImg"></el-avatar> -->
+                    <!-- <el-avatar v-popover:popover :src="headImg"></el-avatar>
+                    <el-popover placement="bottom" ref="popover" trigger="hover"
+                        content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+                        <el-button>退出登录</el-button>
+                    </el-popover> -->
+                    <el-dropdown>
+                        <span class="el-dropdown-link">
+                            <el-avatar :src="headImg"></el-avatar>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item @click.native="exitLogin">退出登录</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
                 </div>
             </div>
         </div>
@@ -42,7 +59,8 @@ export default {
         return {
             headImg: headImg,
             fold: true,
-            tags: []
+            tags: [],
+            weatherIcon:['icon-qingtian','icon-duoyun','icon-xiaoyu','icon-dayu']
         };
     },
     props: {
@@ -67,6 +85,9 @@ export default {
         }
     },
     methods: {
+        exitLogin(){
+            console.log(123)
+        },
         unpack() {
             this.fold = !this.fold
             this.$emit('upIsCollapse')
@@ -167,7 +188,7 @@ export default {
 }
 
 .header-right .item-box .item {
-    margin-left: 15px;
+    margin-left: 20px;
     cursor: pointer;
 }
 

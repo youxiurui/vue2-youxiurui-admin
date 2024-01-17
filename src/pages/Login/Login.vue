@@ -4,10 +4,10 @@
       <span class="title">优秀瑞</span>
       <el-form label-position="right" :rules="rules" class="login-form" ref="ruleForm" :model="form">
         <el-form-item class="form-item" prop="username">
-          <el-input class="form-input" v-model="form.username" placeholder="用户名：admin"></el-input>
+          <el-input class="form-input" @keyup.enter.native="login('ruleForm')" tabindex="0" v-model="form.username" placeholder="用户名：admin"></el-input>
         </el-form-item>
         <el-form-item class="form-item" prop="password">
-          <el-input class="form-input" v-model="form.password" placeholder="密码：123456" show-password></el-input>
+          <el-input class="form-input" @keyup.enter.native="login('ruleForm')" tabindex="0" v-model="form.password" placeholder="密码：123456" show-password></el-input>
         </el-form-item>
         <el-form-item class="form-item">
           <el-switch v-model="isRemember" active-text="记住我"></el-switch>

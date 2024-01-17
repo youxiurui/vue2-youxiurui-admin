@@ -91,6 +91,7 @@ export default {
     position: relative;
     overflow-x: hidden;
     background-color: rgb(255, 255, 255);
+    border: 1px solid #e6e6e6;
 }
 
 .set-scroll::-webkit-scrollbar {

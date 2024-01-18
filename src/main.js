@@ -23,6 +23,7 @@ import {
   RadioGroup,
   Tooltip,
   Message,
+  MessageBox,
   Popover,
   Dropdown,
   DropdownMenu, 
@@ -31,7 +32,11 @@ import {
   Col,
   Table,
   TableColumn,
-  Pagination
+  Pagination,
+  Dialog,
+  Select,
+  Option,
+  Popconfirm,
 } from 'element-ui'
 
 Vue.config.productionTip = false
@@ -65,8 +70,14 @@ Vue.use(Col)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Pagination)
+Vue.use(Dialog)
+Vue.use(Select)
+Vue.use(Option)
+Vue.use(Popconfirm)
 
 Vue.prototype.$message = Message
+Vue.prototype.$alert = MessageBox
+Vue.prototype.$confirm = MessageBox.confirm
 
 new Vue({
   render: h => h(App),

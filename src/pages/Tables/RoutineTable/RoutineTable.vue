@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="pool">
-      <el-dialog top="50px" title="人员信息" :visible.sync="dialogFormVisible">
+      <el-dialog top="80px" title="人员信息" :visible.sync="dialogFormVisible">
         <el-form :model="form">
           <el-form-item label="日期" :label-width="formLabelWidth">
             <el-input v-model="form.date" autocomplete="off"></el-input>

@@ -22,7 +22,7 @@ async function getCity({ location }) {
     })
 }
 
-router.get('/weather', async (req, res) => {
+router.get('/getWeather', async (req, res) => {
     const { location } = req.query
     const resp= await getCity({ location })
     res.send(resp)

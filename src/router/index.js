@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from "vue-router";
 import Layout from '@/Layout/Layout.vue'
+import { reqMenu } from '@/api'
 
 Vue.use(VueRouter)
 
@@ -17,8 +18,7 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
 const routes = [
     {
         path: '/',
-        redirect: 'login',
-        // redirect: 'home',
+        redirect: 'home',
     },
     {
         path: '/login',
@@ -39,105 +39,152 @@ const routes = [
             }
         ]
     },
-    {
-        path: '/btnAuth',
-        component: Layout,
-        children: [
-            {
-                path: '',
-                name: 'btnAuth',
-                meta: {
-                    pathName: '按钮权限'
-                },
-                component: () => import('@/pages/BtnAuth/BtnAuth.vue')
-            }
-        ]
-    },
-    {
-        path: '/tables',
-        meta: {
-            pathName: '表格案例'
-        },
-        component: Layout,
-        children: [
-            {
-                path: 'conditionTable',
-                name: 'conditionTable',
-                meta: {
-                    pathName: '复杂表格'
-                },
-                component: () => import('@/pages/Tables/ConditionTable/ConditionTable.vue'),
-            },
-            {
-                path: 'routineTable',
-                name: 'routineTable',
-                meta: {
-                    pathName: '常规表格'
-                },
-                component: () => import('@/pages/Tables/RoutineTable/RoutineTable.vue'),
-            }
-        ]
-    },
-    {
-        path: '/forms',
-        meta: {
-            pathName: '表单案例'
-        },
-        component: Layout,
-        children: [
-            {
-                path: 'conditionForm',
-                name: 'conditionForm',
-                meta: {
-                    pathName: '复杂表单'
-                },
-                component: () => import('@/pages/Forms/ConditionForm/ConditionForm.vue')
-            },
-            {
-                path: 'routineForm',
-                name: 'routineForm',
-                meta: {
-                    pathName: '常规表单'
-                },
-                component: () => import('@/pages/Forms/RoutineForm/RoutineForm.vue')
-            }
-        ]
-    },
-    {
-        path: '/setting',
-        meta: {
-            pathName: '系统配置'
-        },
-        component: Layout,
-        children: [
-            {
-                path: '',
-                name: 'setting',
-                component: () => import('@/pages/Setting/Setting.vue')
-            }
-        ]
-    },
+    // {
+    //     path: '/authManage',
+    //     name: 'authManage',
+    //     meta: {
+    //         pathName: '权限管理'
+    //     },
+    //     component: Layout,
+    //     children: [
+    //         {
+    //             path: 'btnAuth',
+    //             name: 'btnAuth',
+    //             meta: {
+    //                 pathName: '按钮权限'
+    //             },
+    //             component: () => import('@/pages/BtnAuth/BtnAuth.vue')
+    //         }
+    //     ]
+    // },
+    // {
+    //     path: '/tables',
+    //     meta: {
+    //         pathName: '表格案例'
+    //     },
+    //     component: Layout,
+    //     children: [
+    //         {
+    //             path: 'conditionTable',
+    //             name: 'conditionTable',
+    //             meta: {
+    //                 pathName: '复杂表格'
+    //             },
+    //             component: () => import('@/pages/Tables/ConditionTable/ConditionTable.vue'),
+    //         },
+    //         {
+    //             path: 'routineTable',
+    //             name: 'routineTable',
+    //             meta: {
+    //                 pathName: '常规表格'
+    //             },
+    //             component: () => import('@/pages/Tables/RoutineTable/RoutineTable.vue'),
+    //         }
+    //     ]
+    // },
+    // {
+    //     path: '/forms',
+    //     meta: {
+    //         pathName: '表单案例'
+    //     },
+    //     component: Layout,
+    //     children: [
+    //         {
+    //             path: 'conditionForm',
+    //             name: 'conditionForm',
+    //             meta: {
+    //                 pathName: '复杂表单'
+    //             },
+    //             component: () => import('@/pages/Forms/ConditionForm/ConditionForm.vue')
+    //         },
+    //         {
+    //             path: 'routineForm',
+    //             name: 'routineForm',
+    //             meta: {
+    //                 pathName: '常规表单'
+    //             },
+    //             component: () => import('@/pages/Forms/RoutineForm/RoutineForm.vue')
+    //         }
+    //     ]
+    // },
+    // {
+    //     path: '/setting',
+    //     meta: {
+    //         pathName: '系统配置'
+    //     },
+    //     component: Layout,
+    //     children: [
+    //         {
+    //             path: '',
+    //             name: 'setting',
+    //             component: () => import('@/pages/Setting/Setting.vue')
+    //         }
+    //     ]
+    // },
     {
         path: '*',
         component: () => import('@/pages/404/404.vue')
     }
 ]
 
+function loadComponent(path) {
+    return () => import(`@/${path}`);
+}
+
+function addRoutesFromServerData(serverRoutes) {
+    serverRoutes.forEach(route => {
+        let routeConfig = {
+            path: route.path,
+            name: route.name,
+            component: route.component === 'Layout' ? Layout : () => import(`@/${path}`),
+            children: [],
+            meta: route.meta
+        };
+        if (route.children) {
+            route.children.forEach(child => {
+                routeConfig.children.push({
+                    path: child.path,
+                    name: child.name,
+                    component: loadComponent(child.component),
+                    meta: child.meta
+                });
+            });
+        }
+        router.addRoute(routeConfig);
+    });
+}
+
+let isDynamicRoutesAdded = false;
+
+function addDynamicRoutes() {
+    if (isDynamicRoutesAdded) {
+        return Promise.resolve();
+    }
+
+    return reqMenu().then(response => {
+        const serverRoutes = response.data;
+        addRoutesFromServerData(serverRoutes);
+        isDynamicRoutesAdded = true;
+    }).catch(error => {
+        console.error("Failed to load dynamic routes:", error);
+    });
+}
+
+
 const router = new VueRouter({
     mode: 'hash',
     routes
 })
 
+
 router.beforeEach((to, from, next) => {
-    if (to.name === 'login' && localStorage.getItem('flag') !== null) {
-        next({name:'home'})
-        return
-    }
-    if (to.name === 'login' || localStorage.getItem('flag') !== null) {
-        next(); // 如果是登录页面或者用户已认证，则允许路由继续
+    if (!isDynamicRoutesAdded) {
+        addDynamicRoutes().then(() => {
+            next({ ...to, replace: true });
+        });
     } else {
-        next({ name: 'login' }); // 如果用户未认证且不是去往登录页面，则重定向到登录页面
+        next();
     }
-})
+});
 
 export default router

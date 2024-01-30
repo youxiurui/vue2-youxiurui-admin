@@ -1,0 +1,86 @@
+[
+    {
+        "path": "/authManage",
+        "name": "authManage",
+        "meta": {
+            "pathName": "权限管理"
+        },
+        "component": "Layout",
+        "children": [
+            {
+                "path": "btnAuth",
+                "name": "btnAuth",
+                "meta": {
+                    "pathName": "按钮权限"
+                },
+                "component": "pages/BtnAuth/BtnAuth.vue"
+            }
+        ]
+    },
+    {
+        "path": "/tables",
+        "name":"tables",
+        "meta": {
+            "pathName": "表格案例"
+        },
+        "component": "Layout",
+        "children": [
+            {
+                "path": "conditionTable",
+                "name": "conditionTable",
+                "meta": {
+                    "pathName": "复杂表格"
+                },
+                "component": "pages/Tables/ConditionTable/ConditionTable.vue"
+            },
+            {
+                "path": "routineTable",
+                "name": "routineTable",
+                "meta": {
+                    "pathName": "常规表格"
+                },
+                "component":"pages/Tables/RoutineTable/RoutineTable.vue"
+            }
+        ]
+    },
+    {
+        "path": "/forms",
+        "name":"forms",
+        "meta": {
+            "pathName": "表单案例"
+        },
+        "component": "Layout",
+        "children": [
+            {
+                "path": "conditionForm",
+                "name": "conditionForm",
+                "meta": {
+                    "pathName": "复杂表单"
+                },
+                "component": "pages/Forms/ConditionForm/ConditionForm.vue"
+            },
+            {
+                "path": "routineForm",
+                "name": "routineForm",
+                "meta": {
+                    "pathName": "常规表单"
+                },
+                "component": "pages/Forms/RoutineForm/RoutineForm.vue"
+            }
+        ]
+    },
+    {
+        "path": "/setting",
+        "meta": {
+            "pathName": "系统配置"
+        },
+        "component": "Layout",
+        "children": [
+            {
+                "path": "",
+                "name": "setting",
+                "component": "pages/Setting/Setting.vue"
+            }
+        ]
+    }
+]

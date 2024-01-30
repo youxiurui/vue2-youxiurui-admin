@@ -6,13 +6,25 @@
                 <i class="el-icon-menu"></i>
                 <span slot="title">首页</span>
             </el-menu-item>
-            <el-menu-item index="btnAuth">
+            <!-- <el-menu-item index="btnAuth">
                 <i class="el-icon-turn-off"></i>
                 <span slot="title">按钮权限</span>
-            </el-menu-item>
+            </el-menu-item> -->
+            <el-submenu index="authManage">
+                <template slot="title">
+                    <i class="iconfont icon-quanxian"></i>
+                    <span slot="title">权限管理</span>
+                </template>
+                <el-menu-item-group>
+                    <el-menu-item index="btnAuth">
+                        <i class="iconfont el-icon-turn-off"></i>
+                        <span slot="title">按钮权限</span>
+                    </el-menu-item>
+                </el-menu-item-group>
+            </el-submenu>
             <el-submenu index="forms">
                 <template slot="title">
-                    <i class="el-icon-document"></i>
+                    <i class="iconfont el-icon-document"></i>
                     <span slot="title">表单案例</span>
                 </template>
                 <el-menu-item-group>
@@ -67,9 +79,9 @@ export default {
         change() {
             this.isCollapse = !this.isCollapse;
         },
-        changePage(index,indexPath){
+        changePage(index, indexPath) {
             this.$router.push({
-                name:index
+                name: index
             })
         }
     }
@@ -85,6 +97,15 @@ export default {
 .menu {
     height: 100%;
     border-right: initial;
+}
+
+.iconfont {
+    display: inline-block;
+    margin-right: 5px;
+    width: 24px;
+    text-align: center;
+    font-size: 18px;
+    vertical-align: middle;
 }
 
 ::v-deep .el-menu-item-group__title {

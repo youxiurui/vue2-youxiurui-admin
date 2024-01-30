@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from "vue-router";
+import store from '@/store'
 import Layout from '@/Layout/Layout.vue'
 import { reqMenu } from '@/api'
 
@@ -163,6 +164,7 @@ function addDynamicRoutes() {
 
     return reqMenu().then(response => {
         const serverRoutes = response.data;
+        store.dispatch('setRoutes',{routes:serverRoutes})
         addRoutesFromServerData(serverRoutes);
         isDynamicRoutesAdded = true;
     }).catch(error => {
@@ -186,5 +188,6 @@ router.beforeEach((to, from, next) => {
         next();
     }
 });
+
 
 export default router

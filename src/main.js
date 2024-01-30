@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import store from './store'
 import router from './router'
 import {
   Container,
@@ -81,5 +82,6 @@ Vue.prototype.$confirm = MessageBox.confirm
 
 new Vue({
   render: h => h(App),
-  router
+  store,
+  router,
 }).$mount('#app')

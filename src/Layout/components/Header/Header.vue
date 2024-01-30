@@ -32,12 +32,6 @@
                 </div>
                 <div class="item">用户名</div>
                 <div class="item" style="margin-left: 15px;">
-                    <!-- <el-avatar :src="headImg"></el-avatar> -->
-                    <!-- <el-avatar v-popover:popover :src="headImg"></el-avatar>
-                    <el-popover placement="bottom" ref="popover" trigger="hover"
-                        content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
-                        <el-button>退出登录</el-button>
-                    </el-popover> -->
                     <el-dropdown>
                         <span class="el-dropdown-link">
                             <el-avatar :src="headImg"></el-avatar>

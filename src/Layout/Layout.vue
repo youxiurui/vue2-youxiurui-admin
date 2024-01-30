@@ -103,7 +103,7 @@ export default {
     border-radius: 6px;
 }
 
-.el-aside-transition{
+.el-aside-transition {
     transition: width 0.3s ease;
 }
 </style>

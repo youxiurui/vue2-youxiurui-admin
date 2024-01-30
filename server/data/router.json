@@ -3,7 +3,8 @@
         "path": "/authManage",
         "name": "authManage",
         "meta": {
-            "pathName": "权限管理"
+            "pathName": "权限管理",
+            "icon":"icon-quanxian"
         },
         "component": "Layout",
         "children": [
@@ -11,7 +12,8 @@
                 "path": "btnAuth",
                 "name": "btnAuth",
                 "meta": {
-                    "pathName": "按钮权限"
+                    "pathName": "按钮权限",
+                    "icon":"el-icon-turn-off"
                 },
                 "component": "pages/BtnAuth/BtnAuth.vue"
             }
@@ -21,7 +23,8 @@
         "path": "/tables",
         "name":"tables",
         "meta": {
-            "pathName": "表格案例"
+            "pathName": "表格案例",
+            "icon":"el-icon-film"
         },
         "component": "Layout",
         "children": [
@@ -29,7 +32,8 @@
                 "path": "conditionTable",
                 "name": "conditionTable",
                 "meta": {
-                    "pathName": "复杂表格"
+                    "pathName": "复杂表格",
+                    "icon":"el-icon-film"
                 },
                 "component": "pages/Tables/ConditionTable/ConditionTable.vue"
             },
@@ -37,7 +41,8 @@
                 "path": "routineTable",
                 "name": "routineTable",
                 "meta": {
-                    "pathName": "常规表格"
+                    "pathName": "常规表格",
+                    "icon":"el-icon-film"
                 },
                 "component":"pages/Tables/RoutineTable/RoutineTable.vue"
             }
@@ -47,7 +52,8 @@
         "path": "/forms",
         "name":"forms",
         "meta": {
-            "pathName": "表单案例"
+            "pathName": "表单案例",
+            "icon":"el-icon-document"
         },
         "component": "Layout",
         "children": [
@@ -55,7 +61,8 @@
                 "path": "conditionForm",
                 "name": "conditionForm",
                 "meta": {
-                    "pathName": "复杂表单"
+                    "pathName": "复杂表单",
+                    "icon":"el-icon-document"
                 },
                 "component": "pages/Forms/ConditionForm/ConditionForm.vue"
             },
@@ -63,7 +70,8 @@
                 "path": "routineForm",
                 "name": "routineForm",
                 "meta": {
-                    "pathName": "常规表单"
+                    "pathName": "常规表单",
+                    "icon":"el-icon-document"
                 },
                 "component": "pages/Forms/RoutineForm/RoutineForm.vue"
             }
@@ -72,7 +80,8 @@
     {
         "path": "/setting",
         "meta": {
-            "pathName": "系统配置"
+            "pathName": "系统配置",
+            "icon":"el-icon-setting"
         },
         "component": "Layout",
         "children": [

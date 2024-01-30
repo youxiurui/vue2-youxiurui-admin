@@ -6,10 +6,6 @@
                 <i class="el-icon-menu"></i>
                 <span slot="title">首页</span>
             </el-menu-item>
-            <!-- <el-menu-item index="btnAuth">
-                <i class="el-icon-turn-off"></i>
-                <span slot="title">按钮权限</span>
-            </el-menu-item> -->
             <el-submenu index="authManage">
                 <template slot="title">
                     <i class="iconfont icon-quanxian"></i>
@@ -29,33 +25,33 @@
                 </template>
                 <el-menu-item-group>
                     <el-menu-item index="routineForm">
-                        <i class="el-icon-document"></i>
+                        <i class="iconfont el-icon-document"></i>
                         <span>常规表单</span>
                     </el-menu-item>
                     <el-menu-item index="conditionForm">
-                        <i class="el-icon-document"></i>
+                        <i class="iconfont el-icon-document"></i>
                         <span>高级表单</span>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
             <el-submenu index="tables">
                 <template slot="title">
-                    <i class="el-icon-film"></i>
+                    <i class="iconfont el-icon-film"></i>
                     <span slot="title">表格案例</span>
                 </template>
                 <el-menu-item-group>
                     <el-menu-item index="routineTable">
-                        <i class="el-icon-film"></i>
+                        <i class="iconfont el-icon-film"></i>
                         <span>常规表格</span>
                     </el-menu-item>
                     <el-menu-item index="conditionTable">
-                        <i class="el-icon-film"></i>
+                        <i class="iconfont el-icon-film"></i>
                         <span>复杂表格</span>
                     </el-menu-item>
                 </el-menu-item-group>
             </el-submenu>
             <el-menu-item index="setting">
-                <i class="el-icon-setting"></i>
+                <i class="iconfont el-icon-setting"></i>
                 <span slot="title">系统配置</span>
             </el-menu-item>
         </el-menu>
@@ -66,7 +62,7 @@
 export default {
     data() {
         return {
-            // isCollapse: false
+            routes:[]
         };
     },
     props: {
@@ -74,6 +70,10 @@ export default {
             type: Boolean,
             default: false
         }
+    },
+    mounted(){
+        this.routes=this.$store.state.routes
+        console.log(this.routes)
     },
     methods: {
         change() {

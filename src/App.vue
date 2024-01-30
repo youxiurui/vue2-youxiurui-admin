@@ -21,7 +21,6 @@ export default {
     //   timeout: 10000, // 最长等待时间（毫秒）
     //   enableHighAccuracy: true // 是否需要高精度位置信息
     // });
-
   }
 }
 </script>

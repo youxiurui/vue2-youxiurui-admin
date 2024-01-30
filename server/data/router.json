@@ -4,7 +4,8 @@
         "name": "authManage",
         "meta": {
             "pathName": "权限管理",
-            "icon":"icon-quanxian"
+            "icon":"icon-quanxian",
+            "stair":false
         },
         "component": "Layout",
         "children": [
@@ -24,7 +25,8 @@
         "name":"tables",
         "meta": {
             "pathName": "表格案例",
-            "icon":"el-icon-film"
+            "icon":"el-icon-film",
+            "stair":false
         },
         "component": "Layout",
         "children": [
@@ -53,7 +55,8 @@
         "name":"forms",
         "meta": {
             "pathName": "表单案例",
-            "icon":"el-icon-document"
+            "icon":"el-icon-document",
+            "stair":false
         },
         "component": "Layout",
         "children": [
@@ -81,7 +84,8 @@
         "path": "/setting",
         "meta": {
             "pathName": "系统配置",
-            "icon":"el-icon-setting"
+            "icon":"el-icon-setting",
+            "stair":true
         },
         "component": "Layout",
         "children": [

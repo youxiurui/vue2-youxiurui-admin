@@ -129,7 +129,7 @@ const routes = [
 ]
 
 function loadComponent(path) {
-    return () => import(`@/${path}`);
+    return () => import(`@/${path}.vue`);
 }
 
 function addRoutesFromServerData(serverRoutes) {
@@ -137,7 +137,7 @@ function addRoutesFromServerData(serverRoutes) {
         let routeConfig = {
             path: route.path,
             name: route.name,
-            component: route.component === 'Layout' ? Layout : () => import(`@/${path}`),
+            component: route.component === 'Layout' ? Layout : loadComponent(route.component),
             children: [],
             meta: route.meta
         };
@@ -177,7 +177,6 @@ const router = new VueRouter({
     mode: 'hash',
     routes
 })
-
 
 router.beforeEach((to, from, next) => {
     if (!isDynamicRoutesAdded) {

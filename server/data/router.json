@@ -16,7 +16,7 @@
                     "pathName": "按钮权限",
                     "icon":"el-icon-turn-off"
                 },
-                "component": "pages/BtnAuth/BtnAuth.vue"
+                "component": "pages/BtnAuth/BtnAuth"
             }
         ]
     },
@@ -37,7 +37,7 @@
                     "pathName": "复杂表格",
                     "icon":"el-icon-film"
                 },
-                "component": "pages/Tables/ConditionTable/ConditionTable.vue"
+                "component": "pages/Tables/ConditionTable/ConditionTable"
             },
             {
                 "path": "routineTable",
@@ -46,7 +46,7 @@
                     "pathName": "常规表格",
                     "icon":"el-icon-film"
                 },
-                "component":"pages/Tables/RoutineTable/RoutineTable.vue"
+                "component":"pages/Tables/RoutineTable/RoutineTable"
             }
         ]
     },
@@ -67,7 +67,7 @@
                     "pathName": "复杂表单",
                     "icon":"el-icon-document"
                 },
-                "component": "pages/Forms/ConditionForm/ConditionForm.vue"
+                "component": "pages/Forms/ConditionForm/ConditionForm"
             },
             {
                 "path": "routineForm",
@@ -76,7 +76,7 @@
                     "pathName": "常规表单",
                     "icon":"el-icon-document"
                 },
-                "component": "pages/Forms/RoutineForm/RoutineForm.vue"
+                "component": "pages/Forms/RoutineForm/RoutineForm"
             }
         ]
     },
@@ -92,7 +92,7 @@
             {
                 "path": "",
                 "name": "setting",
-                "component": "pages/Setting/Setting.vue"
+                "component": "pages/Setting/Setting"
             }
         ]
     }

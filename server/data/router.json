@@ -4,8 +4,8 @@
         "name": "authManage",
         "meta": {
             "pathName": "权限管理",
-            "icon":"icon-quanxian",
-            "stair":false
+            "icon": "icon-quanxian",
+            "stair": false
         },
         "component": "Layout",
         "children": [
@@ -14,7 +14,7 @@
                 "name": "btnAuth",
                 "meta": {
                     "pathName": "按钮权限",
-                    "icon":"el-icon-turn-off"
+                    "icon": "el-icon-turn-off"
                 },
                 "component": "pages/BtnAuth/BtnAuth"
             }
@@ -22,11 +22,11 @@
     },
     {
         "path": "/tables",
-        "name":"tables",
+        "name": "tables",
         "meta": {
             "pathName": "表格案例",
-            "icon":"el-icon-film",
-            "stair":false
+            "icon": "el-icon-film",
+            "stair": false
         },
         "component": "Layout",
         "children": [
@@ -35,7 +35,7 @@
                 "name": "conditionTable",
                 "meta": {
                     "pathName": "复杂表格",
-                    "icon":"el-icon-film"
+                    "icon": "el-icon-film"
                 },
                 "component": "pages/Tables/ConditionTable/ConditionTable"
             },
@@ -44,19 +44,19 @@
                 "name": "routineTable",
                 "meta": {
                     "pathName": "常规表格",
-                    "icon":"el-icon-film"
+                    "icon": "el-icon-film"
                 },
-                "component":"pages/Tables/RoutineTable/RoutineTable"
+                "component": "pages/Tables/RoutineTable/RoutineTable"
             }
         ]
     },
     {
         "path": "/forms",
-        "name":"forms",
+        "name": "forms",
         "meta": {
             "pathName": "表单案例",
-            "icon":"el-icon-document",
-            "stair":false
+            "icon": "el-icon-document",
+            "stair": false
         },
         "component": "Layout",
         "children": [
@@ -65,7 +65,7 @@
                 "name": "conditionForm",
                 "meta": {
                     "pathName": "复杂表单",
-                    "icon":"el-icon-document"
+                    "icon": "el-icon-document"
                 },
                 "component": "pages/Forms/ConditionForm/ConditionForm"
             },
@@ -74,7 +74,7 @@
                 "name": "routineForm",
                 "meta": {
                     "pathName": "常规表单",
-                    "icon":"el-icon-document"
+                    "icon": "el-icon-document"
                 },
                 "component": "pages/Forms/RoutineForm/RoutineForm"
             }
@@ -84,8 +84,8 @@
         "path": "/setting",
         "meta": {
             "pathName": "系统配置",
-            "icon":"el-icon-setting",
-            "stair":true
+            "icon": "el-icon-setting",
+            "stair": true
         },
         "component": "Layout",
         "children": [
@@ -93,6 +93,22 @@
                 "path": "",
                 "name": "setting",
                 "component": "pages/Setting/Setting"
+            }
+        ]
+    },
+    {
+        "path": "/menu",
+        "meta": {
+            "pathName": "菜单管理",
+            "icon": "el-icon-s-operation",
+            "stair": true
+        },
+        "component": "Layout",
+        "children": [
+            {
+                "path": "",
+                "name": "menu",
+                "component": "pages/Menu/Menu"
             }
         ]
     }

@@ -20,7 +20,7 @@
                         </el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
-                <el-menu-item v-else :key="index+route.name" index="setting">
+                <el-menu-item v-else :key="index+route.name" :index="route.name">
                     <i class="iconfont" :class="route.icon"></i>
                     <span slot="title">{{route.pathName}}</span>
                 </el-menu-item>
@@ -118,6 +118,7 @@ export default {
             }
             this.routes.push(r)
         });
+        console.log(this.routes)
     },
     methods: {
         change() {

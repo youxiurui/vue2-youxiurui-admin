@@ -7,24 +7,25 @@
                 <span slot="title">首页</span>
             </el-menu-item>
 
-            <template v-for="(route,index) in routes">
-                <el-submenu v-if="route.children" :key="index+route.name" :index="route.name">
+            <template v-for="(route, index) in routes">
+                <el-submenu v-if="route.children" :key="index + route.name" :index="route.name">
                     <template slot="title">
                         <i class="iconfont" :class="route.icon"></i>
-                        <span slot="title">{{route.pathName}}</span>
+                        <span slot="title">{{ route.pathName }}</span>
                     </template>
-                    <el-menu-item-group v-for="(r,index) in route.children" :key="index+r.name">
+                    <el-menu-item-group v-for="(r, index) in route.children" :key="index + r.name">
                         <el-menu-item :index="r.name">
                             <i class="iconfont" :class="r.icon"></i>
                             <span>{{ r.pathName }}</span>
                         </el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
-                <el-menu-item v-else :key="index+route.name" :index="route.name">
+                <el-menu-item v-else :key="index + route.name" :index="route.name">
                     <i class="iconfont" :class="route.icon"></i>
-                    <span slot="title">{{route.pathName}}</span>
+                    <span slot="title">{{ route.pathName }}</span>
                 </el-menu-item>
             </template>
+
 
             <!-- <el-submenu index="authManage">
                 <template slot="title">
@@ -95,16 +96,16 @@ export default {
         const routes = this.$store.state.routes
         routes.forEach(route => {
             const r = {
-                pathName:'',
+                pathName: '',
                 name: '',
                 icon: '',
             }
             if (route.meta.stair) {
-                r.pathName=route.meta.pathName
+                r.pathName = route.meta.pathName
                 r.name = route.children[0].name
                 r.icon = route.meta.icon
             } else {
-                r.pathName=route.meta.pathName
+                r.pathName = route.meta.pathName
                 r.name = route.name
                 r.icon = route.meta.icon
                 r.children = []
@@ -112,13 +113,12 @@ export default {
                     r.children.push({
                         name: c.name,
                         icon: c.meta.icon,
-                        pathName:c.meta.pathName
+                        pathName: c.meta.pathName
                     })
                 })
             }
             this.routes.push(r)
         });
-        console.log(this.routes)
     },
     methods: {
         change() {

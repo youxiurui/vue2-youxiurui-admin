@@ -38,7 +38,13 @@ import {
   Select,
   Option,
   Popconfirm,
+  Divider,
+  Descriptions,
+  DescriptionsItem,
+  Tag
 } from 'element-ui'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.config.productionTip = false
 
@@ -75,6 +81,10 @@ Vue.use(Dialog)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Popconfirm)
+Vue.use(Divider)
+Vue.use(Descriptions)
+Vue.use(DescriptionsItem)
+Vue.use(Tag)
 
 Vue.prototype.$message = Message
 Vue.prototype.$alert = MessageBox

@@ -41,7 +41,8 @@ import {
   Divider,
   Descriptions,
   DescriptionsItem,
-  Tag
+  Tag,
+  Tree
 } from 'element-ui'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -85,6 +86,7 @@ Vue.use(Divider)
 Vue.use(Descriptions)
 Vue.use(DescriptionsItem)
 Vue.use(Tag)
+Vue.use(Tree)
 
 Vue.prototype.$message = Message
 Vue.prototype.$alert = MessageBox

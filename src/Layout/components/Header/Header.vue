@@ -18,7 +18,7 @@
             <div class="item-box">
                 <div class="item">
                     <i class="iconfont" :class="weatherIcon[0]"></i>
-                    <span style="position: relative;top: -1px;margin-left: 3px;">12℃</span>
+                    <span style="position: relative;top: -1px;margin-left: 3px;">{{weatherData.temp||0}}℃</span>
                 </div>
                 <div class="item">
                     <i class="iconfont el-icon-sunny"></i>
@@ -28,9 +28,11 @@
                     <i class="iconfont el-icon-full-screen"></i>
                 </div>
                 <div class="item">
-                    <i class="iconfont icon-github"></i>
+                    <a href="https://github.com/youxiurui/vue2-youxiurui-admin" style="text-decoration: none;">
+                        <i class="iconfont icon-github"></i>
+                    </a>
                 </div>
-                <div class="item">用户名</div>
+                <div class="item">一只优秀瑞</div>
                 <div class="item" style="margin-left: 15px;">
                     <el-dropdown>
                         <span class="el-dropdown-link">
@@ -48,13 +50,18 @@
 
 <script>
 import headImg from '@/assets/images/head.jpg'
+import { reqWeather } from '@/api'
 export default {
     data() {
         return {
             headImg: headImg,
             fold: true,
             tags: [],
-            weatherIcon:['icon-qingtian','icon-duoyun','icon-xiaoyu','icon-dayu']
+            weatherData: {
+                temp: '',
+                weather: ''
+            },
+            weatherIcon: ['icon-qingtian', 'icon-duoyun', 'icon-xiaoyu', 'icon-dayu']
         };
     },
     props: {
@@ -78,8 +85,27 @@ export default {
             immediate: true
         }
     },
+    mounted() {
+        this.getWeather()
+    },
     methods: {
-        exitLogin(){
+        getWeather() {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const { latitude, longitude } = position.coords
+                reqWeather({location:longitude+','+latitude}).then(res=>{
+                    if(!res.data) return
+                    this.weatherData.temp=res.data[0].temperature
+                    this.weatherData.weather=res.data[0].weather
+                })
+            }, err => {
+                console.log(err)
+            }, {
+                maximumAge: 600000,
+                timeout: 10000,
+                enableHighAccuracy: true
+            })
+        },
+        exitLogin() {
             console.log(123)
         },
         unpack() {

@@ -2,12 +2,12 @@
   <div class="setting">
     <div class="set-info">
       <el-descriptions title="系统信息" :column="1" border>
-        <el-descriptions-item label="主机名称">yunbianriluo</el-descriptions-item>
-        <el-descriptions-item label="操作系统">Linux 3.10.0-1160.71.1.el7.x86_64 #1 SMP Tue Jun 28 15:37:28 UTC 2022</el-descriptions-item>
+        <el-descriptions-item label="主机名称">youxiurui</el-descriptions-item>
+        <el-descriptions-item label="操作系统">CentOS 7.9.2009 x86_64(Py3.7.9)</el-descriptions-item>
         <el-descriptions-item label="系统架构">Unix X64</el-descriptions-item>
-        <el-descriptions-item label="CPU核数">4 核</el-descriptions-item>
-        <el-descriptions-item label="运行时长">464 天 01 小时 46 分 28 秒</el-descriptions-item>
-        <el-descriptions-item label="外网地址">106.52.31.189 |中国 广东 广州 电信</el-descriptions-item>
+        <el-descriptions-item label="CPU核数">2 核</el-descriptions-item>
+        <el-descriptions-item label="运行时长">44天</el-descriptions-item>
+        <el-descriptions-item label="外网地址">123.249.10.212 | 华北-北京四</el-descriptions-item>
       </el-descriptions>
     </div>
     <div style="flex-grow: 0.1;"></div>

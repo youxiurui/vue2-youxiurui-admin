@@ -26,7 +26,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="table">
+    <div class="table set-scroll">
       <el-table :data="tableData" border style="width: 100%">
         <el-table-column prop="date" label="日期">
         </el-table-column>
@@ -49,47 +49,47 @@
       </el-table>
     </div>
     <div class="pagination">
-        <div class="icon">
-          <el-tooltip class="item" effect="dark" content="导出" placement="top">
-            <i class="iconfont icon-daochu"></i>
-          </el-tooltip>
-        </div>
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-          :current-page.sync="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="10"
-          layout="sizes, prev, pager, next" :total="100">
-        </el-pagination>
-        <div class="total">
-          <span>共100条记录</span>
-        </div>
+      <div class="icon">
+        <el-tooltip class="item" effect="dark" content="导出" placement="top">
+          <i class="iconfont icon-daochu"></i>
+        </el-tooltip>
       </div>
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+        :current-page.sync="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="10" layout="sizes, prev, pager, next"
+        :total="100">
+      </el-pagination>
+      <div class="total">
+        <span>共100条记录</span>
+      </div>
+    </div>
     <div class="pool">
-        <el-dialog top="80px" title="人员信息" :visible.sync="dialogFormVisible">
-          <el-form :model="form">
-            <el-form-item label="日期" :label-width="formLabelWidth">
-              <el-input v-model="form.date" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="姓名" :label-width="formLabelWidth">
-              <el-input v-model="form.name" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="省份" :label-width="formLabelWidth">
-              <el-input v-model="form.province" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="市区" :label-width="formLabelWidth">
-              <el-input v-model="form.city" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="地址" :label-width="formLabelWidth">
-              <el-input v-model="form.address" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="邮编" :label-width="formLabelWidth">
-              <el-input v-model="form.zip" autocomplete="off"></el-input>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-          </div>
-        </el-dialog>
-      </div>
+      <el-dialog top="80px" title="人员信息" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+          <el-form-item label="日期" :label-width="formLabelWidth">
+            <el-input v-model="form.date" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="姓名" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="省份" :label-width="formLabelWidth">
+            <el-input v-model="form.province" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="市区" :label-width="formLabelWidth">
+            <el-input v-model="form.city" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="地址" :label-width="formLabelWidth">
+            <el-input v-model="form.address" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="邮编" :label-width="formLabelWidth">
+            <el-input v-model="form.zip" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -114,7 +114,79 @@ export default {
           "city": "和平区",
           "address": "天津市和平区和平道2号",
           "zip": "300041"
-        }
+        },
+        {
+          "date": "2016-05-01",
+          "name": "王小虎1",
+          "province": "北京",
+          "city": "东城区",
+          "address": "北京市东城区东华门街道1号",
+          "zip": "100010"
+        },
+        {
+          "date": "2016-05-02",
+          "name": "王小虎2",
+          "province": "天津",
+          "city": "和平区",
+          "address": "天津市和平区和平道2号",
+          "zip": "300041"
+        },
+        {
+          "date": "2016-05-03",
+          "name": "王小虎3",
+          "province": "河北",
+          "city": "石家庄市",
+          "address": "河北省石家庄市长安区3号",
+          "zip": "050011"
+        },
+        {
+          "date": "2016-05-04",
+          "name": "王小虎4",
+          "province": "山西",
+          "city": "太原市",
+          "address": "山西省太原市迎泽区4号",
+          "zip": "030024"
+        },
+        {
+          "date": "2016-05-05",
+          "name": "王小虎5",
+          "province": "内蒙古",
+          "city": "呼和浩特市",
+          "address": "内蒙古自治区呼和浩特市回民区5号",
+          "zip": "010030"
+        },
+        {
+          "date": "2016-05-06",
+          "name": "王小虎6",
+          "province": "辽宁",
+          "city": "沈阳市",
+          "address": "辽宁省沈阳市沈河区6号",
+          "zip": "110013"
+        },
+        {
+          "date": "2016-05-07",
+          "name": "王小虎7",
+          "province": "吉林",
+          "city": "长春市",
+          "address": "吉林省长春市宽城区7号",
+          "zip": "130051"
+        },
+        {
+          "date": "2016-05-08",
+          "name": "王小虎8",
+          "province": "黑龙江",
+          "city": "哈尔滨市",
+          "address": "黑龙江省哈尔滨市道里区8号",
+          "zip": "150010"
+        },
+        {
+          "date": "2016-05-09",
+          "name": "王小虎9",
+          "province": "上海",
+          "city": "黄浦区",
+          "address": "上海市黄浦区南京东路9号",
+          "zip": "200001"
+        },
       ],
       gridData: [{
         date: '2016-05-02',
@@ -160,7 +232,7 @@ export default {
     onSubmit() {
       console.log('submit!')
     },
-    resetForm(formName){
+    resetForm(formName) {
       this.$refs[formName].resetFields()
     },
     handleChange(row) {
@@ -226,9 +298,24 @@ export default {
   margin-bottom: 10px;
 }
 
+.table {
+  height: 74%;
+  overflow-y: scroll;
+}
+
+.set-scroll::-webkit-scrollbar {
+  width: 3px;
+}
+
+.set-scroll::-webkit-scrollbar-thumb {
+  background-color: rgb(221, 222, 224);
+  border-radius: 6px;
+}
+
 .pagination {
   width: 100%;
   position: absolute;
+  bottom: 0;
   right: 0;
   padding: 5px 5px 5px 10px;
   display: flex;

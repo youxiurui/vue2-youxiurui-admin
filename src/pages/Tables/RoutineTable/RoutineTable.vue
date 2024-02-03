@@ -1,9 +1,7 @@
 <template>
   <div class="routine-table" ref="routineTable">
-    <div class="table">
+    <div class="table set-scroll">
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="date" label="日期">
-        </el-table-column>
         <el-table-column prop="name" label="姓名">
         </el-table-column>
         <el-table-column prop="province" label="省份">
@@ -228,6 +226,12 @@ export default {
   padding: 10px;
 }
 
+.table{
+  height: 94%;
+  border-radius: 6px;
+  overflow-y: scroll;
+}
+
 .pagination {
   width: 100%;
   position: absolute;
@@ -256,6 +260,14 @@ export default {
   font-size: 13px;
 }
 
+.set-scroll::-webkit-scrollbar {
+    width: 3px;
+}
+
+.set-scroll::-webkit-scrollbar-thumb {
+    background-color: rgb(221, 222, 224);
+    border-radius: 6px;
+}
 ::v-deep .el-form-item {
   padding-right: 22px;
 }

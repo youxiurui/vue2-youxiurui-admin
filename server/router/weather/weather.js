@@ -1,20 +1,11 @@
 const router = require('express').Router()
 const { reqCity, reqWeather } = require('../../api')
 
-async function getCity({ location }) {
-    // return new Promise((resolve, reject) => {
-    //     reqCity({ location }).then(res => {
-    //         resolve(res)
-    //     }).catch(err=>{
-    //         reject(err)
-    //     })
-    // })
+async function getCity({ location, extensions }) {
     const { regeocode } = await reqCity({ location })
-    // console.log(regeocode)
     const citycode = regeocode.addressComponent.towncode?.substring(0, 6)
-    console.log(citycode)
     return new Promise((resolve, reject) => {
-        reqWeather({ citycode }).then(res => {
+        reqWeather({ citycode, extensions }).then(res => {
             resolve(res)
         }).catch(err => {
             reject(err)
@@ -23,9 +14,22 @@ async function getCity({ location }) {
 }
 
 router.get('/getWeather', async (req, res) => {
-    const { location } = req.query
-    const resp= await getCity({ location })
-    res.send(resp)
+    const { location, extensions = 'all' } = req.query
+    let resp
+    try {
+        resp = await getCity({ location, extensions })
+        res.send({
+            code: 200,
+            message: 'success',
+            data: resp
+        })
+    } catch (error) {
+        res.send({
+            code: 500,
+            message: 'success',
+            data: resp
+        })
+    }
 })
 
 

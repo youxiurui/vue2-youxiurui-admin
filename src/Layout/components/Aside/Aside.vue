@@ -7,7 +7,7 @@
                 <span slot="title">首页</span>
             </el-menu-item>
 
-            <template v-for="(route, index) in routes">
+            <!-- <template v-for="(route, index) in routes">
                 <el-submenu v-if="route.children" :key="index + route.name" :index="route.name">
                     <template slot="title">
                         <i class="iconfont" :class="route.icon"></i>
@@ -24,10 +24,10 @@
                     <i class="iconfont" :class="route.icon"></i>
                     <span slot="title">{{ route.pathName }}</span>
                 </el-menu-item>
-            </template>
+            </template> -->
 
 
-            <!-- <el-submenu index="authManage">
+            <el-submenu index="authManage">
                 <template slot="title">
                     <i class="iconfont icon-quanxian"></i>
                     <span slot="title">权限管理</span>
@@ -74,7 +74,11 @@
             <el-menu-item index="setting">
                 <i class="iconfont el-icon-setting"></i>
                 <span slot="title">系统配置</span>
-            </el-menu-item> -->
+            </el-menu-item>
+            <el-menu-item index="menu">
+                <i class="iconfont el-icon-s-operation"></i>
+                <span slot="title">菜单管理</span>
+            </el-menu-item>
         </el-menu>
     </div>
 </template>

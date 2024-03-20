@@ -4,10 +4,12 @@
       <span class="title">优秀瑞</span>
       <el-form label-position="right" :rules="rules" class="login-form" ref="ruleForm" :model="form">
         <el-form-item class="form-item" prop="username">
-          <el-input class="form-input" @keyup.enter.native="login('ruleForm')" tabindex="0" v-model="form.username" placeholder="用户名：admin"></el-input>
+          <el-input class="form-input" @keyup.enter.native="login('ruleForm')" tabindex="0" v-model="form.username"
+            placeholder="用户名：admin"></el-input>
         </el-form-item>
         <el-form-item class="form-item" prop="password">
-          <el-input class="form-input" @keyup.enter.native="login('ruleForm')" tabindex="0" v-model="form.password" placeholder="密码：123456" show-password></el-input>
+          <el-input class="form-input" @keyup.enter.native="login('ruleForm')" tabindex="0" v-model="form.password"
+            placeholder="密码：123456" show-password></el-input>
         </el-form-item>
         <el-form-item class="form-item">
           <el-switch v-model="isRemember" active-text="记住我"></el-switch>
@@ -21,6 +23,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -31,10 +34,10 @@ export default {
       isRemember: true,
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'change' },
+          { required: true, message: '请输入用户名', trigger: 'blur' },
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'change' },
+          { required: true, message: '请输入密码', trigger: 'blur' },
         ]
       },
       account: {
@@ -44,27 +47,28 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['userLogin', 'setUserInfo']),
     login(formName) {
-      if (this.form.username === this.account.username && this.form.password === this.account.password) {
-        localStorage.setItem('flag','')
-        this.$router.push({
-          name: 'home'
+      this.$refs[formName].validate((valid) => {
+        if (!valid) {
+          this.$message.error('请输入账号和密码')
+          return
+        }
+        this.userLogin({ username: this.form.username, password: this.form.password }).then(res => {
+          if (res.code !== 200) {
+            this.$message.warning(res.msg)
+            return
+          }
+          if (this.isRemember) {
+            localStorage.setItem('token', res.data.token)
+          } else {
+            sessionStorage.setItem('token', res.data.token)
+          }
+          this.setUserInfo({ username: this.form.username, password: this.form.password })
+          this.$message.success('登录成功')
+          this.$router.replace('/home')
         })
-        this.$message({
-          message: '登录成功',
-          type: 'success'
-        })
-      } else if (this.form.username === '' || this.form.password === '') {
-        this.$message({
-          message: this.form.username === '' ? '请输入用户名' : '请输入密码',
-          type: 'warning'
-        })
-      } else {
-        this.$message({
-          message: '用户名或者密码错误',
-          type: 'error'
-        })
-      }
+      })
     }
   }
 }

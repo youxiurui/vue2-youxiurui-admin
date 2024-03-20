@@ -21,6 +21,8 @@ async function asyncWrite(data,filePath){
     }
 }
 
+
+
 module.exports={
     timestampToTime,
     asyncWrite

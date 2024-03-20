@@ -3,7 +3,13 @@ const express = require('express')
 const app = express()
 const router = require('./router')
 const {timestampToTime}=require('./utils')
+const {encrypt,decode}=require('./utils/jwt')
+const {getAdmin,setAdmin,hasAdmin}=require('./data/adminTable')
 
+app.use(express.json())
+
+
+// 跨域
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -15,9 +21,22 @@ app.use((req, res, next) => {
   }
 });
 
-app.use(express.json())
-app.use('/auth', router.auth)
-app.use('/weather', router.weather)
+// 鉴权
+const authToken=(req,res,next)=>{
+  const token=req.headers.token
+  if(!decode(token)){
+    return res.status(401).send({
+      code: 401,
+      status:false,
+      message: '请先登录'
+    })
+  }
+  next()
+}
+
+app.use('/user',router.login)
+app.use('/auth',authToken, router.auth)
+app.use('/weather',authToken, router.weather)
 
 
 app.use('/', (req, res) => {

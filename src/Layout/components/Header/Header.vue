@@ -86,7 +86,7 @@ export default {
         }
     },
     mounted() {
-        this.getWeather()
+        // this.getWeather()
     },
     methods: {
         getWeather() {
@@ -106,7 +106,9 @@ export default {
             })
         },
         exitLogin() {
-            console.log(123)
+            localStorage.removeItem('token')
+            sessionStorage.removeItem('token')
+            this.$router.push('/login')
         },
         unpack() {
             this.fold = !this.fold

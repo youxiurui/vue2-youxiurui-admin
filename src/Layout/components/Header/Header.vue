@@ -32,7 +32,7 @@
                         <i class="iconfont icon-github"></i>
                     </a>
                 </div>
-                <div class="item">一只优秀瑞</div>
+                <div class="item">{{ userInfo.username }}</div>
                 <div class="item" style="margin-left: 15px;">
                     <el-dropdown>
                         <span class="el-dropdown-link">
@@ -54,6 +54,7 @@ import { reqWeather } from '@/api'
 export default {
     data() {
         return {
+            userInfo:{},
             headImg: headImg,
             fold: true,
             tags: [],
@@ -87,6 +88,7 @@ export default {
     },
     mounted() {
         // this.getWeather()
+        this.userInfo = this.$store.state.userInfo
     },
     methods: {
         getWeather() {

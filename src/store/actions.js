@@ -2,16 +2,10 @@ import {
     reqLogin
 } from '@/api'
 export default {
-    userLogin(state,params) {
-        return reqLogin(params).then(res=>{
-            state.commit('SETUSERLOGIN',res)
-            return res
-        })
+    setUserInfo(context,data){
+        context.commit('SETUSERINFO',data)
     },
-    setUserInfo(state,{username,password}){
-        
-    },
-    setRoutes(state,{routes}){
-        state.commit('SETROUTES',{routes})
+    setRoutes(context,{routes}){
+        context.commit('SETROUTES',{routes})
     }
 }

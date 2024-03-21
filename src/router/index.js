@@ -4,6 +4,7 @@ import store from '@/store'
 import { Message } from 'element-ui'
 import Layout from '@/Layout/Layout.vue'
 import { reqMenu } from '@/api'
+import { decrypt } from '@/utils/crypto'
 
 Vue.use(VueRouter)
 

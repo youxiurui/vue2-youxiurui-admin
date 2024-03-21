@@ -23,7 +23,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { reqLogin } from '@/api'
+import { mapActions } from 'vuex'
+import { encrypt,decrypt } from '@/utils/crypto'
 export default {
   data() {
     return {
@@ -47,22 +49,22 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['userLogin', 'setUserInfo']),
+    ...mapActions(['setUserInfo']),
     login(formName) {
       this.$refs[formName].validate((valid) => {
         if (!valid) {
           this.$message.error('请输入账号和密码')
           return
         }
-        this.userLogin({ username: this.form.username, password: this.form.password }).then(res => {
+        reqLogin({ username: this.form.username, password: this.form.password }).then(res => {
           if (res.code !== 200) {
             this.$message.warning(res.msg)
             return
           }
           if (this.isRemember) {
-            localStorage.setItem('token', res.data.token)
+            localStorage.setItem('token', encrypt(res.data.token))
           } else {
-            sessionStorage.setItem('token', res.data.token)
+            sessionStorage.setItem('token', encrypt(res.data.token))
           }
           this.setUserInfo({ username: this.form.username, password: this.form.password })
           this.$message.success('登录成功')

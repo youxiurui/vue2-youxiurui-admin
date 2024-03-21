@@ -1,9 +1,12 @@
 const router = require('express').Router()
 const {getAdmin,setAdmin,hasAdmin}=require('../../data/adminTable')
-const {encrypt,decode}=require('../../utils/jwt')
+const {encode}=require('../../utils/jwt')
+const {decrypt}=require('../../utils/crypto')
 
 router.post('/login', (req, res) => {
-    const { username, password } = req.body
+    let { username, password } = req.body
+    username=decrypt(username)
+    password=decrypt(password)
     if(!hasAdmin(username)){
         res.send({
             code: 401,
@@ -18,7 +21,7 @@ router.post('/login', (req, res) => {
             msg: '密码错误'
         })
     }
-    const token=encrypt(username)
+    const token=encode(username)
     res.send({
         code: 200,
         msg: '登陆成功',

@@ -4,7 +4,6 @@ import store from '@/store'
 import { Message } from 'element-ui'
 import Layout from '@/Layout/Layout.vue'
 import { reqMenu } from '@/api'
-import { decrypt } from '@/utils/crypto'
 
 Vue.use(VueRouter)
 
@@ -197,7 +196,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem('token')||sessionStorage.getItem('token')
+    let token = localStorage.getItem('token') || sessionStorage.getItem('token')
     if (to.path === '/login' && token) {
         next('/home');
     } else if (to.path !== '/login' && !token) {

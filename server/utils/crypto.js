@@ -1,9 +1,8 @@
-import CryptoJS from 'crypto-js'
+const CryptoJS = require('crypto-js')
 
-const KEY = process.env.VUE_APP_KEY
-const IV = process.env.VUE_APP_IV
-
-export function encrypt(word) {
+const KEY = 'yizhiyouxiurui66'
+const IV = 'yizhiyouxiurui66'
+function encrypt(word) {
     let key = CryptoJS.enc.Utf8.parse(KEY)
     let iv = CryptoJS.enc.Utf8.parse(IV)
     // 偏移量
@@ -18,7 +17,7 @@ export function encrypt(word) {
     return CryptoJS.enc.Base64.stringify(encrypted.ciphertext)
 }
 
-export function decrypt(word) {
+function decrypt(word) {
     let key = CryptoJS.enc.Utf8.parse(KEY)
     let iv = CryptoJS.enc.Utf8.parse(IV)
     let base64 = CryptoJS.enc.Base64.parse(word)
@@ -31,4 +30,9 @@ export function decrypt(word) {
             padding: CryptoJS.pad.ZeroPadding
         })
     return CryptoJS.enc.Utf8.stringify(decrypt).toString()
+}
+
+module.exports={
+    encrypt,
+    decrypt
 }

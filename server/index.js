@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const router = require('./router')
 const {timestampToTime}=require('./utils')
-const {encrypt,decode}=require('./utils/jwt')
+const {decode}=require('./utils/jwt')
 const {getAdmin,setAdmin,hasAdmin}=require('./data/adminTable')
 
 app.use(express.json())
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 // 鉴权
 const authToken=(req,res,next)=>{
-  const token=req.headers.token
+  let token=req.headers.token
   if(!decode(token)){
     return res.status(401).send({
       code: 401,

@@ -56,17 +56,18 @@ export default {
           this.$message.error('请输入账号和密码')
           return
         }
-        reqLogin({ username: this.form.username, password: this.form.password }).then(res => {
+        reqLogin({ username: encrypt(this.form.username), password: encrypt(this.form.password) }).then(res => {
           if (res.code !== 200) {
             this.$message.warning(res.msg)
             return
           }
           if (this.isRemember) {
-            localStorage.setItem('token', encrypt(res.data.token))
+            localStorage.setItem('token', res.data.token)
+            localStorage.setItem('userInfo', encrypt(this.form.username))
           } else {
-            sessionStorage.setItem('token', encrypt(res.data.token))
+            sessionStorage.setItem('token', res.data.token)
+            sessionStorage.setItem('userInfo', encrypt(this.form.username))
           }
-          this.setUserInfo({ username: this.form.username, password: this.form.password })
           this.$message.success('登录成功')
           this.$router.replace('/home')
         })

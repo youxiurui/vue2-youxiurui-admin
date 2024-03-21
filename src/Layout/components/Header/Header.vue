@@ -18,7 +18,7 @@
             <div class="item-box">
                 <div class="item">
                     <i class="iconfont" :class="weatherIcon[0]"></i>
-                    <span style="position: relative;top: -1px;margin-left: 3px;">{{weatherData.temp||0}}℃</span>
+                    <span style="position: relative;top: -1px;margin-left: 3px;">{{ weatherData.temp || 0 }}℃</span>
                 </div>
                 <div class="item">
                     <i class="iconfont el-icon-sunny"></i>
@@ -51,10 +51,12 @@
 <script>
 import headImg from '@/assets/images/head.jpg'
 import { reqWeather } from '@/api'
+import { decrypt } from '@/utils/crypto'
+import { isFullscreen,openFullscreen,closeFullscreen } from '@/utils/fullScreen'
 export default {
     data() {
         return {
-            userInfo:{},
+            userInfo: {},
             headImg: headImg,
             fold: true,
             tags: [],
@@ -87,17 +89,19 @@ export default {
         }
     },
     mounted() {
-        // this.getWeather()
-        this.userInfo = this.$store.state.userInfo
+        const userInfo = localStorage.getItem('userInfo') || sessionStorage.getItem('userInfo')
+        if (userInfo) {
+            this.$set(this.userInfo,'username',decrypt(userInfo))
+        }
     },
     methods: {
         getWeather() {
             navigator.geolocation.getCurrentPosition((position) => {
                 const { latitude, longitude } = position.coords
-                reqWeather({location:longitude+','+latitude}).then(res=>{
-                    if(!res.data) return
-                    this.weatherData.temp=res.data[0].temperature
-                    this.weatherData.weather=res.data[0].weather
+                reqWeather({ location: longitude + ',' + latitude }).then(res => {
+                    if (!res.data) return
+                    this.weatherData.temp = res.data[0].temperature
+                    this.weatherData.weather = res.data[0].weather
                 })
             }, err => {
                 console.log(err)
@@ -108,47 +112,19 @@ export default {
             })
         },
         exitLogin() {
-            localStorage.removeItem('token')
-            sessionStorage.removeItem('token')
+            localStorage.clear()
+            sessionStorage.clear()
             this.$router.push('/login')
         },
         unpack() {
             this.fold = !this.fold
             this.$emit('upIsCollapse')
         },
-        isFullscreen() {
-            return document.fullscreenElement != null ||
-                document.mozFullScreenElement != null ||
-                document.webkitFullscreenElement != null ||
-                document.msFullscreenElement != null
-        },
-        openFullscreen() {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) {
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) {
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) {
-                document.documentElement.msRequestFullscreen();
-            }
-        },
-        closeFullscreen() {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            }
-        },
         fullScreen() {
-            if (this.isFullscreen()) {
-                this.closeFullscreen()
+            if (isFullscreen()) {
+                closeFullscreen()
             } else {
-                this.openFullscreen()
+                openFullscreen()
             }
         }
     }

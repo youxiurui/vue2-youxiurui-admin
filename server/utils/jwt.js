@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const secretKey = 'youxiurui'
 
-function encrypt(data){
+function encode(data){
     return jwt.sign({data}, secretKey, {expiresIn: '1h'})
 }
 
@@ -16,6 +16,6 @@ function decode(token){
 }
 
 module.exports={
-    encrypt,
+    encode,
     decode
 }

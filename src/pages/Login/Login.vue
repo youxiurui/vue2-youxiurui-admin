@@ -25,7 +25,7 @@
 <script>
 import { reqLogin } from '@/api'
 import { mapActions } from 'vuex'
-import { encrypt,decrypt } from '@/utils/crypto'
+import { encrypt } from '@/utils/crypto'
 export default {
   data() {
     return {
@@ -41,15 +41,10 @@ export default {
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
         ]
-      },
-      account: {
-        username: 'admin',
-        password: '123456'
       }
     }
   },
   methods: {
-    ...mapActions(['setUserInfo']),
     login(formName) {
       this.$refs[formName].validate((valid) => {
         if (!valid) {

@@ -7,5 +7,5 @@ const URL={
 }
 
 export const reqLogin=(params={})=>request(URL.login,'POST',params)
-export const reqMenu=(params={})=>request(URL.menu,'GET',params)
+export const reqMenu=()=>request(URL.menu,'GET')
 export const reqWeather=(params)=>request(URL.weather,'GET',params)

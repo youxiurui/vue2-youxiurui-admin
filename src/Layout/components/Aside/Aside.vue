@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import { reqMenu } from "@/api"
 export default {
     data() {
         return {
@@ -97,32 +98,35 @@ export default {
         }
     },
     mounted() {
-        const routes = this.$store.state.routes
-        routes.forEach(route => {
-            const r = {
-                pathName: '',
-                name: '',
-                icon: '',
-            }
-            if (route.meta.stair) {
-                r.pathName = route.meta.pathName
-                r.name = route.children[0].name
-                r.icon = route.meta.icon
-            } else {
-                r.pathName = route.meta.pathName
-                r.name = route.name
-                r.icon = route.meta.icon
-                r.children = []
-                route.children.forEach(c => {
-                    r.children.push({
-                        name: c.name,
-                        icon: c.meta.icon,
-                        pathName: c.meta.pathName
-                    })
-                })
-            }
-            this.routes.push(r)
-        });
+        reqMenu().then(res => {
+            console.log(res)
+        })
+        // const routes = this.$store.state.routes
+        // routes.forEach(route => {
+        //     const r = {
+        //         pathName: '',
+        //         name: '',
+        //         icon: '',
+        //     }
+        //     if (route.meta.stair) {
+        //         r.pathName = route.meta.pathName
+        //         r.name = route.children[0].name
+        //         r.icon = route.meta.icon
+        //     } else {
+        //         r.pathName = route.meta.pathName
+        //         r.name = route.name
+        //         r.icon = route.meta.icon
+        //         r.children = []
+        //         route.children.forEach(c => {
+        //             r.children.push({
+        //                 name: c.name,
+        //                 icon: c.meta.icon,
+        //                 pathName: c.meta.pathName
+        //             })
+        //         })
+        //     }
+        //     this.routes.push(r)
+        // });
     },
     methods: {
         change() {

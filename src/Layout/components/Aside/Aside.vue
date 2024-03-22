@@ -7,8 +7,8 @@
                 <span slot="title">首页</span>
             </el-menu-item>
 
-            <!-- <template v-for="(route, index) in routes">
-                <el-submenu v-if="route.children" :key="index + route.name" :index="route.name">
+            <template v-for="(route, index) in routes">
+                <el-submenu v-if="route.children" :index="route.name">
                     <template slot="title">
                         <i class="iconfont" :class="route.icon"></i>
                         <span slot="title">{{ route.pathName }}</span>
@@ -20,14 +20,14 @@
                         </el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
-                <el-menu-item v-else :key="index + route.name" :index="route.name">
+                <el-menu-item v-else :index="route.name">
                     <i class="iconfont" :class="route.icon"></i>
                     <span slot="title">{{ route.pathName }}</span>
                 </el-menu-item>
-            </template> -->
+            </template>
 
 
-            <el-submenu index="authManage">
+            <!-- <el-submenu index="authManage">
                 <template slot="title">
                     <i class="iconfont icon-quanxian"></i>
                     <span slot="title">权限管理</span>
@@ -78,13 +78,15 @@
             <el-menu-item index="menu">
                 <i class="iconfont el-icon-s-operation"></i>
                 <span slot="title">菜单管理</span>
-            </el-menu-item>
+            </el-menu-item> -->
         </el-menu>
     </div>
 </template>
 
 <script>
+import { addRouting } from '@/router'
 import { reqMenu } from "@/api"
+import { decrypt } from '@/utils/crypto'
 export default {
     data() {
         return {
@@ -97,37 +99,40 @@ export default {
             default: false
         }
     },
-    mounted() {
-        reqMenu().then(res => {
-            console.log(res)
-        })
-        // const routes = this.$store.state.routes
-        // routes.forEach(route => {
-        //     const r = {
-        //         pathName: '',
-        //         name: '',
-        //         icon: '',
-        //     }
-        //     if (route.meta.stair) {
-        //         r.pathName = route.meta.pathName
-        //         r.name = route.children[0].name
-        //         r.icon = route.meta.icon
-        //     } else {
-        //         r.pathName = route.meta.pathName
-        //         r.name = route.name
-        //         r.icon = route.meta.icon
-        //         r.children = []
-        //         route.children.forEach(c => {
-        //             r.children.push({
-        //                 name: c.name,
-        //                 icon: c.meta.icon,
-        //                 pathName: c.meta.pathName
-        //             })
-        //         })
-        //     }
-        //     this.routes.push(r)
-        // });
+    async created() {
+        try {
+            const res=await reqMenu()
+            addRouting(res.data)
+            res.data.forEach(route => {
+                const r = {
+                    pathName: '',
+                    name: '',
+                    icon: '',
+                }
+                if (route.meta.stair) {
+                    r.pathName = route.meta.pathName
+                    r.name = route.children[0].name
+                    r.icon = route.meta.icon
+                } else {
+                    r.pathName = route.meta.pathName
+                    r.name = route.name
+                    r.icon = route.meta.icon
+                    r.children = []
+                    route.children.forEach(c => {
+                        r.children.push({
+                            name: c.name,
+                            icon: c.meta.icon,
+                            pathName: c.meta.pathName
+                        })
+                    })
+                }
+                this.routes.push(r)
+            })
+        } catch (error) {
+            console.log(error)
+        }
     },
+    mounted() { },
     methods: {
         change() {
             this.isCollapse = !this.isCollapse;

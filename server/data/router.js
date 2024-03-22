@@ -1,23 +1,6 @@
 module.exports=[
     {
         type:'all',
-        path: "/home",
-        meta: {
-            pathName: "首页",
-            icon: "el-icon-menu",
-            stair: true
-        },
-        component: "Layout",
-        children: [
-            {
-                path: "",
-                name: "home",
-                component: "pages/Home/Home"
-            }
-        ]
-    },
-    {
-        type:'all',
         path: "/authManage",
         name: "authManage",
         meta: {

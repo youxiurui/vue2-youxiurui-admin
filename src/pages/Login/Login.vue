@@ -23,8 +23,9 @@
 </template>
 
 <script>
-import { reqLogin } from '@/api'
 import { mapActions } from 'vuex'
+import { reqLogin, reqMenu } from '@/api'
+import { addRouting } from '@/router'
 import { encrypt } from '@/utils/crypto'
 export default {
   data() {
@@ -46,12 +47,13 @@ export default {
   },
   methods: {
     login(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (!valid) {
           this.$message.error('请输入账号和密码')
           return
         }
-        reqLogin({ username: encrypt(this.form.username), password: encrypt(this.form.password) }).then(res => {
+        try {
+          const res = await reqLogin({ username: encrypt(this.form.username), password: encrypt(this.form.password) })
           if (res.code !== 200) {
             this.$message.warning(res.msg)
             return
@@ -63,9 +65,18 @@ export default {
             sessionStorage.setItem('token', res.data.token)
             sessionStorage.setItem('userInfo', encrypt(this.form.username))
           }
+          const routes=await reqMenu()
+          addRouting(routes.data)
+          if(this.isRemember){
+            localStorage.setItem('menu', encrypt(JSON.stringify(routes.data)))
+          }else{
+            sessionStorage.setItem('menu', encrypt(JSON.stringify(routes.data)))
+          }
           this.$message.success('登录成功')
           this.$router.replace('/home')
-        })
+        } catch (error) {
+          console.log(error)
+        }
       })
     }
   }

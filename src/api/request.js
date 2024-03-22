@@ -10,17 +10,17 @@ instance.interceptors.request.use(function (config) {
     if (token) {
         config.headers.token =token
     }
-    return config;
+    return config
 }, function (error) {
-    return Promise.reject(error);
+    return Promise.reject(error)
 });
 
 // 添加响应拦截器
 instance.interceptors.response.use(function (response) {
-    return response;
+    return response
 }, function (error) {
     console.log(error)
-});
+})
 
 function request(url, method = 'GET', data = {}) {
     return new Promise((resolve, reject) => {

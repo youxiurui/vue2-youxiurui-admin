@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 import { Message } from 'element-ui'
 import Layout from '@/Layout/Layout.vue'
 import store from '@/store'
-import { decrypt, encrypt } from '@/utils/crypto'
 import { reqMenu } from '@/api'
 
 Vue.use(VueRouter)
@@ -42,129 +41,31 @@ const routes = [
             }
         ]
     },
-    // {
-    //     path: "/authManage",
-    //     name: "authManage",
-    //     meta: {
-    //         pathName: "权限管理",
-    //         icon: "icon-quanxian",
-    //         stair: false
-    //     },
-    //     component: Layout,
-    //     children: [
-    //         {
-    //             path: "btnAuth",
-    //             name: "btnAuth",
-    //             meta: {
-    //                 pathName: "按钮权限",
-    //                 icon: "el-icon-turn-off"
-    //             },
-    //             component: ()=>import("@/pages/BtnAuth/BtnAuth")
-    //         }
-    //     ]
-    // },
-    // {
-    //     path: "/tables",
-    //     name: "tables",
-    //     meta: {
-    //         pathName: "表格案例",
-    //         icon: "el-icon-film",
-    //         stair: false
-    //     },
-    //     component: Layout,
-    //     children: [
-    //         {
-    //             path: "conditionTable",
-    //             name: "conditionTable",
-    //             meta: {
-    //                 pathName: "复杂表格",
-    //                 icon: "el-icon-film"
-    //             },
-    //             component: ()=>import("@/pages/Tables/ConditionTable/ConditionTable")
-    //         },
-    //         {
-    //             path: "routineTable",
-    //             name: "routineTable",
-    //             meta: {
-    //                 pathName: "常规表格",
-    //                 icon: "el-icon-film"
-    //             },
-    //             component: ()=>import("@/pages/Tables/RoutineTable/RoutineTable")
-    //         }
-    //     ]
-    // },
-    // {
-    //     path: "/forms",
-    //     name: "forms",
-    //     meta: {
-    //         pathName: "表单案例",
-    //         icon: "el-icon-document",
-    //         stair: false
-    //     },
-    //     component: Layout,
-    //     children: [
-    //         {
-    //             path: "conditionForm",
-    //             name: "conditionForm",
-    //             meta: {
-    //                 pathName: "复杂表单",
-    //                 icon: "el-icon-document"
-    //             },
-    //             component: ()=>import("@/pages/Forms/ConditionForm/ConditionForm")
-    //         },
-    //         {
-    //             path: "routineForm",
-    //             name: "routineForm",
-    //             meta: {
-    //                 pathName: "常规表单",
-    //                 icon: "el-icon-document"
-    //             },
-    //             component: ()=>import("@/pages/Forms/RoutineForm/RoutineForm")
-    //         }
-    //     ]
-    // },
-    // {
-    //     path: "/setting",
-    //     meta: {
-    //         pathName: "系统配置",
-    //         icon: "el-icon-setting",
-    //         stair: true
-    //     },
-    //     component: Layout,
-    //     children: [
-    //         {
-    //             path: "",
-    //             name: "setting",
-    //             component: ()=>import("@/pages/Setting/Setting")
-    //         }
-    //     ]
-    // },
-    // {
-    //     path: "/menu",
-    //     meta: {
-    //         pathName: "菜单管理",
-    //         icon: "el-icon-s-operation",
-    //         stair: true
-    //     },
-    //     component: Layout,
-    //     children: [
-    //         {
-    //             path: "",
-    //             name: "menu",
-    //             component: ()=>import("@/pages/Menu/Menu")
-    //         }
-    //     ]
-    // },
     {
         path: '*',
         component: () => import('@/pages/404/404.vue')
     }
 ]
 
-const router = new VueRouter({
-    mode: 'hash',
-    routes
-})
+// const router = new VueRouter({
+//     mode: 'hash',
+//     routes
+// })
+
+function createRouter() {
+    return new VueRouter({
+        mode: 'hash',
+        routes: routes
+    })
+}
+
+function resetRouter() {
+    const newRouter = createRouter()
+    router.matcher = newRouter.matcher
+}
+
+const router = createRouter()
+
 
 router.beforeEach(async (to, from, next) => {
     let token = localStorage.getItem('token') || sessionStorage.getItem('token')
@@ -185,12 +86,16 @@ router.beforeEach(async (to, from, next) => {
             sessionStorage.clear()
             next('/login')
         } else {
-            if(store.state.routes.length === 0 ){
-                const res=await reqMenu()
-                store.commit('SETROUTES', res.data)
-                addRouting(res.data)
-                next({...to,replace:true})
-            }else{
+            if (store.state.routes.length === 0) {
+                try {
+                    const res = await reqMenu()
+                    store.commit('SETROUTES', res.data)
+                    addRouting(res.data)
+                    next({ ...to, replace: true })
+                } catch (error) {
+                    console.log(error)
+                }
+            } else {
                 next()
             }
         }
@@ -205,7 +110,7 @@ function loadView(viewPath) {
 
 
 function addRouting(routers) {
-    const removeRoutes = []
+    resetRouter()
     routers.forEach(r => {
         const topLevelRoute = {
             ...r,
@@ -217,11 +122,15 @@ function addRouting(routers) {
                 component: loadView(child.component)
             }))
         }
-        removeRoutes.push(router.addRoute(topLevelRoute))
+        router.addRoute(topLevelRoute)
     })
-    return removeRoutes
 }
 
-export { addRouting }
+function getRouters() {
+    const disRoutes = ['/', '*', '/login', '/home', '/menu']
+    return [...routes, ...store.state.routes].filter(r => !disRoutes.includes(r.path))
+}
+
+export { addRouting, getRouters }
 
 export default router

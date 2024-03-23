@@ -11,7 +11,7 @@
             <el-button type="text" size="mini" @click="() => append(data)">
               编辑
             </el-button>
-            <el-popconfirm title="确定删除吗？" >
+            <el-popconfirm title="确定删除吗？">
               <el-button type="text" size="mini" style="color: red; margin-left: 10px;" slot="reference">删除</el-button>
             </el-popconfirm>
           </span>
@@ -20,82 +20,38 @@
     </div>
     <div style="flex-grow: 0.1;"></div>
     <div class="menu-right">
-      
+
     </div>
   </div>
 </template>
-    
+
 <script>
+import { getRouters } from '@/router'
 export default {
   data() {
     return {
-      treeData: [
-        {
-          label: '首页',
-          name: '首页',
-          stair: true,
-        },
-        {
-          label: '权限管理',
-          name: '权限管理',
-          stair: true,
-          children: [
-            {
-              label: '按钮权限',
-              name: '按钮权限',
-              stair: false,
-            }
-          ]
-        },
-        {
-          label: '表格案例',
-          name: '表格案例',
-          stair: true,
-          children: [
-            {
-              label: '复杂表格',
-              name: '复杂表格',
-              stair: false,
-            },
-            {
-              label: '简单表格',
-              name: '简单表格',
-              stair: false,
-            }
-          ]
-        },
-        {
-          label: '表单案例',
-          name: '表单案例',
-          stair: true,
-          children: [
-            {
-              label: '复杂表单',
-              name: '复杂表单',
-              stair: false,
-            },
-            {
-              label: '简单表单',
-              name: '简单表单',
-              stair: false,
-            }
-          ]
-        },
-        {
-          label: '系统配置',
-          name: '系统配置',
-          stair: true,
-        },
-        {
-          label: '菜单管理',
-          name: '菜单管理',
-          stair: true,
-        },
-      ],
+      treeData: [],
     }
   },
   mounted() {
-
+      const routes = getRouters()
+      routes.forEach(route => {
+        const r = {
+          label: route.meta.pathName,
+          name: route.meta.pathName,
+          stair: route.meta.stair
+        }
+        if (!route.meta.stair) {
+          r.children = route.children.map(c => {
+            return {
+              label: c.meta.pathName,
+              name: c.meta.pathName,
+              stair: c.meta.stair
+            }
+          })
+        }
+        this.treeData.push(r)
+      })
   },
   methods: {
     handleNodeClick(data) {
@@ -109,7 +65,7 @@ export default {
 }
 
 </script>
-  
+
 <style scoped>
 .menu {
   width: 100%;
@@ -146,4 +102,3 @@ export default {
   padding-right: 8px;
 }
 </style>
-  

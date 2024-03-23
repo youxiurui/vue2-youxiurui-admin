@@ -99,43 +99,33 @@ export default {
             default: false
         }
     },
-    async created() {
-        try {
-            // setTimeout(() => {
-            //     console.log(3)
-            //     let menu = localStorage.getItem('menu') || sessionStorage.getItem('menu')
-            //     if (!menu) return
-            //     menu = JSON.parse(menu)
-            const routes=this.$store.state.routes
-            routes.forEach(route => {
-                const r = {
-                    pathName: '',
-                    name: '',
-                    icon: '',
-                }
-                if (route.meta.stair) {
-                    r.pathName = route.meta.pathName
-                    r.name = route.children[0].name
-                    r.icon = route.meta.icon
-                } else {
-                    r.pathName = route.meta.pathName
-                    r.name = route.name
-                    r.icon = route.meta.icon
-                    r.children = []
-                    route.children.forEach(c => {
-                        r.children.push({
-                            name: c.name,
-                            icon: c.meta.icon,
-                            pathName: c.meta.pathName
-                        })
+    created() {
+        const routes = this.$store.state.routes
+        routes.forEach(route => {
+            const r = {
+                pathName: '',
+                name: '',
+                icon: '',
+            }
+            if (route.meta.stair) {
+                r.pathName = route.meta.pathName
+                r.name = route.children[0].name
+                r.icon = route.meta.icon
+            } else {
+                r.pathName = route.meta.pathName
+                r.name = route.name
+                r.icon = route.meta.icon
+                r.children = []
+                route.children.forEach(c => {
+                    r.children.push({
+                        name: c.name,
+                        icon: c.meta.icon,
+                        pathName: c.meta.pathName
                     })
-                }
-                this.routes.push(r)
-            })
-            // }, 0)
-        } catch (error) {
-            console.log(error)
-        }
+                })
+            }
+            this.routes.push(r)
+        })
     },
     mounted() { },
     methods: {

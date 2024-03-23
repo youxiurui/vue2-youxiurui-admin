@@ -2,9 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const router = require('./router')
-const {timestampToTime}=require('./utils')
 const {decode}=require('./utils/jwt')
-const {getAdmin,setAdmin,hasAdmin}=require('./data/adminTable')
 
 app.use(express.json())
 

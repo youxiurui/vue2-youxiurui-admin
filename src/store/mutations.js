@@ -5,7 +5,7 @@ export default {
     SETUSERINFO(state,data){
         state.userInfo=data
     },
-    SETROUTES(state,{routes}){
-        state.routes=routes
+    SETROUTES(state,data){
+        state.routes=data
     }    
 }

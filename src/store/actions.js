@@ -5,7 +5,7 @@ export default {
     setUserInfo(context,data){
         context.commit('SETUSERINFO',data)
     },
-    setRoutes(context,{routes}){
-        context.commit('SETROUTES',{routes})
+    setRoutes(context,data){
+        context.commit('SETROUTES',data)
     }
 }

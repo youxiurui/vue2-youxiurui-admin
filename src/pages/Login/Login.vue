@@ -5,11 +5,11 @@
       <el-form label-position="right" :rules="rules" class="login-form" ref="ruleForm" :model="form">
         <el-form-item class="form-item" prop="username">
           <el-input class="form-input" @keyup.enter.native="login('ruleForm')" tabindex="0" v-model="form.username"
-            placeholder="用户名：admin"></el-input>
+            placeholder="admin/user"></el-input>
         </el-form-item>
         <el-form-item class="form-item" prop="password">
           <el-input class="form-input" @keyup.enter.native="login('ruleForm')" tabindex="0" v-model="form.password"
-            placeholder="密码：123456" show-password></el-input>
+            placeholder="000000/111111" show-password></el-input>
         </el-form-item>
         <el-form-item class="form-item">
           <el-switch v-model="isRemember" active-text="记住我"></el-switch>
@@ -34,7 +34,7 @@ export default {
         username: '',
         password: ''
       },
-      isRemember: true,
+      isRemember: false,
       rules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -66,12 +66,8 @@ export default {
             sessionStorage.setItem('userInfo', encrypt(this.form.username))
           }
           const routes=await reqMenu()
+          this.$store.commit('SETROUTES', routes.data)
           addRouting(routes.data)
-          if(this.isRemember){
-            localStorage.setItem('menu', encrypt(JSON.stringify(routes.data)))
-          }else{
-            sessionStorage.setItem('menu', encrypt(JSON.stringify(routes.data)))
-          }
           this.$message.success('登录成功')
           this.$router.replace('/home')
         } catch (error) {

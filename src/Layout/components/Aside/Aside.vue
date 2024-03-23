@@ -101,9 +101,13 @@ export default {
     },
     async created() {
         try {
-            const res=await reqMenu()
-            addRouting(res.data)
-            res.data.forEach(route => {
+            // setTimeout(() => {
+            //     console.log(3)
+            //     let menu = localStorage.getItem('menu') || sessionStorage.getItem('menu')
+            //     if (!menu) return
+            //     menu = JSON.parse(menu)
+            const routes=this.$store.state.routes
+            routes.forEach(route => {
                 const r = {
                     pathName: '',
                     name: '',
@@ -128,6 +132,7 @@ export default {
                 }
                 this.routes.push(r)
             })
+            // }, 0)
         } catch (error) {
             console.log(error)
         }

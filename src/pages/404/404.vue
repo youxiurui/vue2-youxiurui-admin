@@ -1,12 +1,16 @@
 <template>
     <div id="wrong-page">
-        <el-button type="primary" class="btn">返回首页</el-button>
+        <el-button type="primary" class="btn" @click="back">返回首页</el-button>
     </div>
 </template>
 
 <script>
 export default {
-    
+    methods:{
+        back(){
+            this.$router.replace('/home')
+        }
+    }
 }
 
 </script>

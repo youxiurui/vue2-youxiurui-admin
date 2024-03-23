@@ -1,6 +1,6 @@
 const adminTable = new Map()
 
-adminTable.set('admin', { password: '123456' })
+adminTable.set('admin', { password: '000000' })
 
 function getAdmin(key) {
     return adminTable.get(key)

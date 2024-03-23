@@ -2,6 +2,9 @@ import Vue from 'vue';
 import VueRouter from "vue-router";
 import { Message } from 'element-ui'
 import Layout from '@/Layout/Layout.vue'
+import store from '@/store'
+import { decrypt, encrypt } from '@/utils/crypto'
+import { reqMenu } from '@/api'
 
 Vue.use(VueRouter)
 
@@ -163,7 +166,7 @@ const router = new VueRouter({
     routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     let token = localStorage.getItem('token') || sessionStorage.getItem('token')
     if (to.path === '/login' && token) {
         next('/home')
@@ -178,14 +181,18 @@ router.beforeEach((to, from, next) => {
         const now = Math.floor(Date.now() / 1000)
         if (now > exp) {
             Message.warning('登录过期，请重新登录')
-            localStorage.removeItem('token')
-            sessionStorage.removeItem('token')
+            localStorage.clear()
+            sessionStorage.clear()
             next('/login')
         } else {
-            // window.addEventListener('beforeunload', function (e) {
-            //     console.log(456)
-            // })
-            next()
+            if(store.state.routes.length === 0 ){
+                const res=await reqMenu()
+                store.commit('SETROUTES', res.data)
+                addRouting(res.data)
+                next({...to,replace:true})
+            }else{
+                next()
+            }
         }
     } else {
         next()
@@ -198,6 +205,7 @@ function loadView(viewPath) {
 
 
 function addRouting(routers) {
+    const removeRoutes = []
     routers.forEach(r => {
         const topLevelRoute = {
             ...r,
@@ -209,8 +217,9 @@ function addRouting(routers) {
                 component: loadView(child.component)
             }))
         }
-        router.addRoute(topLevelRoute)
+        removeRoutes.push(router.addRoute(topLevelRoute))
     })
+    return removeRoutes
 }
 
 export { addRouting }

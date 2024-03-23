@@ -23,9 +23,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import { reqLogin, reqMenu } from '@/api'
-import { addRouting } from '@/router'
+import { addRouting, resetRouter } from '@/router'
 import { encrypt } from '@/utils/crypto'
 export default {
   data() {
@@ -46,35 +45,67 @@ export default {
     }
   },
   methods: {
-    login(formName) {
-      this.$refs[formName].validate(async (valid) => {
-        if (!valid) {
-          this.$message.error('请输入账号和密码')
-          return
+    async login(formName) {
+      if (!(await this.$refs[formName].validate())) {
+        return this.$message.error('请输入账号和密码')
+      }
+
+      try {
+        const res = await reqLogin({
+          username: encrypt(this.form.username),
+          password: encrypt(this.form.password),
+        })
+
+        if (res.code !== 200) {
+          return this.$message.warning(res.msg)
         }
-        try {
-          const res = await reqLogin({ username: encrypt(this.form.username), password: encrypt(this.form.password) })
-          if (res.code !== 200) {
-            this.$message.warning(res.msg)
-            return
-          }
-          if (this.isRemember) {
-            localStorage.setItem('token', res.data.token)
-            localStorage.setItem('userInfo', encrypt(this.form.username))
-          } else {
-            sessionStorage.setItem('token', res.data.token)
-            sessionStorage.setItem('userInfo', encrypt(this.form.username))
-          }
-          const routes=await reqMenu()
-          this.$store.commit('SETROUTES', routes.data)
-          addRouting(routes.data)
-          this.$message.success('登录成功')
-          this.$router.replace('/home')
-        } catch (error) {
-          console.log(error)
-        }
-      })
+
+        const storage = this.isRemember ? localStorage : sessionStorage
+        storage.setItem('token', res.data.token)
+        storage.setItem('userInfo', encrypt(this.form.username))
+
+        const routes = await reqMenu();
+        this.$store.commit('SETROUTES', routes.data)
+        resetRouter()
+        addRouting(routes.data)
+
+        this.$message.success('登录成功')
+        this.$router.push('/home')
+      } catch (error) {
+        this.$message.error('登录过程中发生错误，请稍后重试')
+      }
     }
+
+    // login(formName) {
+    //   this.$refs[formName].validate(async (valid) => {
+    //     if (!valid) {
+    //       this.$message.error('请输入账号和密码')
+    //       return
+    //     }
+    //     try {
+    //       const res = await reqLogin({ username: encrypt(this.form.username), password: encrypt(this.form.password) })
+    //       if (res.code !== 200) {
+    //         this.$message.warning(res.msg)
+    //         return
+    //       }
+    //       if (this.isRemember) {
+    //         localStorage.setItem('token', res.data.token)
+    //         localStorage.setItem('userInfo', encrypt(this.form.username))
+    //       } else {
+    //         sessionStorage.setItem('token', res.data.token)
+    //         sessionStorage.setItem('userInfo', encrypt(this.form.username))
+    //       }
+    //       const routes=await reqMenu()
+    //       this.$store.commit('SETROUTES', routes.data)
+    //       resetRouter()
+    //       addRouting(routes.data)
+    //       this.$message.success('登录成功')
+    //       this.$router.replace('/home')
+    //     } catch (error) {
+    //       console.log(error)
+    //     }
+    //   })
+    // }
   }
 }
 

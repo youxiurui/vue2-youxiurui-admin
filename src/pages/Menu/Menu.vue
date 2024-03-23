@@ -34,24 +34,39 @@ export default {
     }
   },
   mounted() {
-      const routes = getRouters()
-      routes.forEach(route => {
-        const r = {
-          label: route.meta.pathName,
-          name: route.meta.pathName,
-          stair: route.meta.stair
-        }
-        if (!route.meta.stair) {
-          r.children = route.children.map(c => {
-            return {
-              label: c.meta.pathName,
-              name: c.meta.pathName,
-              stair: c.meta.stair
-            }
-          })
-        }
-        this.treeData.push(r)
+    // const routes = getRouters()
+    // routes.forEach(route => {
+    //   const r = {
+    //     label: route.meta.pathName,
+    //     name: route.meta.pathName,
+    //     stair: route.meta.stair
+    //   }
+    //   if (!route.meta.stair) {
+    //     r.children = route.children.map(c => {
+    //       return {
+    //         label: c.meta.pathName,
+    //         name: c.meta.pathName,
+    //         stair: c.meta.stair
+    //       }
+    //     })
+    //   }
+    //   this.treeData.push(r)
+    // })
+
+    const routes = getRouters()
+    this.treeData = routes.map(route => ({
+      label: route.meta.pathName,
+      name: route.meta.pathName,
+      stair: route.meta.stair,
+      ...(route.meta.stair || !route.children ? {} : {
+        children: route.children.map(c => ({
+          label: c.meta.pathName,
+          name: c.meta.pathName,
+          stair: c.meta.stair
+        }))
       })
+    }))
+
   },
   methods: {
     handleNodeClick(data) {
@@ -60,7 +75,9 @@ export default {
     append(data) {
       console.log(data)
     },
-    remove(data) { }
+    remove(data) {
+      console.log(data)
+    }
   }
 }
 

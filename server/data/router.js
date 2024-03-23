@@ -6,7 +6,7 @@ module.exports=[
         meta: {
             pathName: "权限管理",
             icon: "icon-quanxian",
-            stair: false
+            stair: false,
         },
         component: "Layout",
         children: [
@@ -17,7 +17,18 @@ module.exports=[
                     pathName: "按钮权限",
                     icon: "el-icon-turn-off"
                 },
-                component: "pages/BtnAuth/BtnAuth"
+                component: "pages/BtnAuth/BtnAuth",
+                // children: [
+                //     {
+                //         path: "btnAuth2",
+                //         name: "btnAuth2",
+                //         meta: {
+                //             pathName: "按钮权限2",
+                //             icon: "el-icon-turn-off"
+                //         },
+                //         component: "pages/BtnAuth/BtnAuth"
+                //     }
+                // ]
             }
         ]
     },

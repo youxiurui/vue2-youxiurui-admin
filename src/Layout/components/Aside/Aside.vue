@@ -84,14 +84,11 @@
 </template>
 
 <script>
-import { addRouting } from '@/router'
-import { reqMenu } from "@/api"
-import { decrypt } from '@/utils/crypto'
 export default {
     data() {
         return {
             routes: []
-        };
+        }
     },
     props: {
         isCollapse: {
@@ -100,37 +97,51 @@ export default {
         }
     },
     created() {
-        const routes = this.$store.state.routes
-        routes.forEach(route => {
-            const r = {
-                pathName: '',
-                name: '',
-                icon: '',
-            }
-            if (route.meta.stair) {
-                r.pathName = route.meta.pathName
-                r.name = route.children[0].name
-                r.icon = route.meta.icon
-            } else {
-                r.pathName = route.meta.pathName
-                r.name = route.name
-                r.icon = route.meta.icon
-                r.children = []
-                route.children.forEach(c => {
-                    r.children.push({
-                        name: c.name,
-                        icon: c.meta.icon,
-                        pathName: c.meta.pathName
-                    })
-                })
-            }
-            this.routes.push(r)
-        })
+        // const routes = this.$store.state.routes
+        // routes.forEach(route => {
+        //     const r = {
+        //         pathName: '',
+        //         name: '',
+        //         icon: '',
+        //     }
+        //     if (route.meta.stair) {
+        //         r.pathName = route.meta.pathName
+        //         r.name = route.children[0].name
+        //         r.icon = route.meta.icon
+        //     } else {
+        //         r.pathName = route.meta.pathName
+        //         r.name = route.name
+        //         r.icon = route.meta.icon
+        //         r.children = []
+        //         route.children.forEach(c => {
+        //             r.children.push({
+        //                 name: c.name,
+        //                 icon: c.meta.icon,
+        //                 pathName: c.meta.pathName
+        //             })
+        //         })
+        //     }
+        //     this.routes.push(r)
+        // })
+
+        this.routes = this.$store.state.routes.map(({ meta, name, children }) => ({
+            pathName: meta.pathName,
+            name: meta.stair ? children[0].name : name,
+            icon: meta.icon,
+            ...(children && !meta.stair && {
+                children: children.map(({ name, meta }) => ({
+                    name,
+                    icon: meta.icon,
+                    pathName: meta.pathName,
+                }))
+            })
+        }))
+        
     },
     mounted() { },
     methods: {
         change() {
-            this.isCollapse = !this.isCollapse;
+            this.isCollapse = !this.isCollapse
         },
         changePage(index, indexPath) {
             this.$router.push({

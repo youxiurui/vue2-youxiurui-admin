@@ -90,6 +90,7 @@ router.beforeEach(async (to, from, next) => {
                 try {
                     const res = await reqMenu()
                     store.commit('SETROUTES', res.data)
+                    resetRouter()
                     addRouting(res.data)
                     next({ ...to, replace: true })
                 } catch (error) {
@@ -110,7 +111,11 @@ function loadView(viewPath) {
 
 
 function addRouting(routers) {
-    resetRouter()
+    // if (Array.isArray(routers)) {
+    //     routers.forEach(r => {
+    //         addRouting(r)
+    //     })
+    // }
     routers.forEach(r => {
         const topLevelRoute = {
             ...r,
@@ -131,6 +136,6 @@ function getRouters() {
     return [...routes, ...store.state.routes].filter(r => !disRoutes.includes(r.path))
 }
 
-export { addRouting, getRouters }
+export { addRouting, getRouters, resetRouter }
 
 export default router

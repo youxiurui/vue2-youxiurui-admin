@@ -34,41 +34,22 @@ export default {
     }
   },
   mounted() {
-    // const routes = getRouters()
-    // routes.forEach(route => {
-    //   const r = {
-    //     label: route.meta.pathName,
-    //     name: route.meta.pathName,
-    //     stair: route.meta.stair
-    //   }
-    //   if (!route.meta.stair) {
-    //     r.children = route.children.map(c => {
-    //       return {
-    //         label: c.meta.pathName,
-    //         name: c.meta.pathName,
-    //         stair: c.meta.stair
-    //       }
-    //     })
-    //   }
-    //   this.treeData.push(r)
-    // })
-
-    const routes = getRouters()
-    this.treeData = routes.map(route => ({
-      label: route.meta.pathName,
-      name: route.meta.pathName,
-      stair: route.meta.stair,
-      ...(route.meta.stair || !route.children ? {} : {
-        children: route.children.map(c => ({
-          label: c.meta.pathName,
-          name: c.meta.pathName,
-          stair: c.meta.stair
-        }))
-      })
-    }))
-
+    this.treeData = this.createTreeData(getRouters())
   },
   methods: {
+    createTreeData(routes) {
+      return routes.map(route => {
+        const node = {
+          label: route.meta && route.meta.pathName,
+          name: route.meta && route.meta.pathName,
+          stair: route.meta && route.meta.stair || false
+        }
+        if (route.children && !route.meta.stair) {
+          node.children = this.createTreeData(route.children)
+        }
+        return node
+      })
+    },
     handleNodeClick(data) {
       console.log(data);
     },

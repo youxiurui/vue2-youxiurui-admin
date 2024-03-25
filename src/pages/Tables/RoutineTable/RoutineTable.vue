@@ -1,7 +1,35 @@
 <template>
-  <div class="routine-table" ref="routineTable">
+  <div class="condition-table">
+    <div class="condition-serch">
+      <el-form :inline="true" label-width="80px" :model="formSerch" ref="formSerch" class="demo-form-inline serch-form">
+        <el-form-item label="日期:">
+          <el-input v-model="formSerch.date" placeholder="请填写内容"></el-input>
+        </el-form-item>
+        <el-form-item label="姓名:">
+          <el-input v-model="formSerch.name" placeholder="请填写内容"></el-input>
+        </el-form-item>
+        <el-form-item label="省份:">
+          <el-input v-model="formSerch.province" placeholder="请填写内容"></el-input>
+        </el-form-item>
+        <el-form-item label="市区:">
+          <el-input v-model="formSerch.city" placeholder="请填写内容"></el-input>
+        </el-form-item>
+        <el-form-item label="地址:">
+          <el-input v-model="formSerch.address" placeholder="请填写内容"></el-input>
+        </el-form-item>
+        <el-form-item label="邮编:">
+          <el-input v-model="formSerch.zip" placeholder="请填写内容"></el-input>
+        </el-form-item>
+        <el-form-item class="query-btn">
+          <el-button type="primary" @click="onSubmit">查询</el-button>
+          <el-button @click="resetForm('formSerch')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <div class="table set-scroll">
       <el-table :data="tableData" border style="width: 100%">
+        <el-table-column prop="date" label="日期">
+        </el-table-column>
         <el-table-column prop="name" label="姓名">
         </el-table-column>
         <el-table-column prop="province" label="省份">
@@ -88,6 +116,22 @@ export default {
           "zip": "300041"
         },
         {
+          "date": "2016-05-01",
+          "name": "王小虎1",
+          "province": "北京",
+          "city": "东城区",
+          "address": "北京市东城区东华门街道1号",
+          "zip": "100010"
+        },
+        {
+          "date": "2016-05-02",
+          "name": "王小虎2",
+          "province": "天津",
+          "city": "和平区",
+          "address": "天津市和平区和平道2号",
+          "zip": "300041"
+        },
+        {
           "date": "2016-05-03",
           "name": "王小虎3",
           "province": "河北",
@@ -143,14 +187,6 @@ export default {
           "address": "上海市黄浦区南京东路9号",
           "zip": "200001"
         },
-        {
-          "date": "2016-05-10",
-          "name": "王小虎10",
-          "province": "江苏",
-          "city": "南京市",
-          "address": "江苏省南京市玄武区10号",
-          "zip": "210018"
-        }
       ],
       gridData: [{
         date: '2016-05-02',
@@ -172,19 +208,33 @@ export default {
       dialogTableVisible: false,
       dialogFormVisible: false,
       form: {
-        "date": "",
-        "name": "",
-        "province": "",
-        "city": "",
-        "address": "",
-        "zip": ""
+        date: "",
+        name: "",
+        province: "",
+        city: "",
+        address: "",
+        zip: ""
       },
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      formSerch: {
+        date: "",
+        name: "",
+        province: "",
+        city: "",
+        address: "",
+        zip: ""
+      }
     }
   },
   mounted() {
   },
   methods: {
+    onSubmit() {
+      console.log('submit!')
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
+    },
     handleChange(row) {
       this.dialogFormVisible = true
       this.form = row
@@ -216,25 +266,56 @@ export default {
   }
 }
 
+
 </script>
 
 <style scoped>
-.routine-table {
+.condition-table {
   width: 100%;
   height: 100%;
   border-radius: 6px;
   padding: 10px;
 }
 
-.table{
-  height: 94%;
+.condition-serch {
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #e6e6e6;
+  /* padding: 5px; */
   border-radius: 6px;
+}
+
+.condition-serch .serch-form {
+  padding: 10px 10px 0 10px;
+}
+
+.condition-serch .query-btn {
+  left: 38px;
+  position: relative;
+}
+
+::v-deep .el-form-item {
+  margin-bottom: 10px;
+}
+
+.table {
+  height: 74%;
   overflow-y: scroll;
+}
+
+.set-scroll::-webkit-scrollbar {
+  width: 3px;
+}
+
+.set-scroll::-webkit-scrollbar-thumb {
+  background-color: rgb(221, 222, 224);
+  border-radius: 6px;
 }
 
 .pagination {
   width: 100%;
   position: absolute;
+  bottom: 0;
   right: 0;
   padding: 5px 5px 5px 10px;
   display: flex;
@@ -260,23 +341,43 @@ export default {
   font-size: 13px;
 }
 
-.set-scroll::-webkit-scrollbar {
-    width: 3px;
+
+
+/* ------------------- */
+
+
+
+.el-row {
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
-.set-scroll::-webkit-scrollbar-thumb {
-    background-color: rgb(221, 222, 224);
-    border-radius: 6px;
-}
-::v-deep .el-form-item {
-  padding-right: 22px;
+.el-col {
+  border-radius: 4px;
 }
 
-::v-deep .el-form-item__label {
-  width: 80px !important;
+.bg-purple-dark {
+  background: #99a9bf;
 }
 
-::v-deep .el-form-item__content {
-  margin-left: 80px !important;
+.bg-purple {
+  background: #d3dce6;
+}
+
+.bg-purple-light {
+  background: #e5e9f2;
+}
+
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
 }
 </style>

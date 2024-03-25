@@ -3,11 +3,11 @@
         <el-menu default-active="1-4-1" class="el-menu-vertical-demo menu" :collapse="isCollapse"
             :collapse-transition="false" @select="changePage">
             <el-menu-item index="home">
-                <i class="el-icon-menu"></i>
+                <i class="iconfont icon-shouye"></i>
                 <span slot="title">首页</span>
             </el-menu-item>
 
-            <template v-for="(route, index) in routes">
+            <!-- <template v-for="(route, index) in routes">
                 <el-submenu v-if="route.children" :index="route.name">
                     <template slot="title">
                         <i class="iconfont" :class="route.icon"></i>
@@ -24,7 +24,9 @@
                     <i class="iconfont" :class="route.icon"></i>
                     <span slot="title">{{ route.pathName }}</span>
                 </el-menu-item>
-            </template>
+            </template> -->
+
+            <recursive-menu v-for="(route, index) in routes" :key="index" :route="route"></recursive-menu>
 
 
             <!-- <el-submenu index="authManage">
@@ -84,11 +86,16 @@
 </template>
 
 <script>
+import RecursiveMenu  from './RecursiveMenu/RecursiveMenu.vue'
+import { getRouters } from '@/router'
 export default {
     data() {
         return {
             routes: []
         }
+    },
+    components:{
+        RecursiveMenu
     },
     props: {
         isCollapse: {
@@ -124,19 +131,21 @@ export default {
         //     this.routes.push(r)
         // })
 
-        this.routes = this.$store.state.routes.map(({ meta, name, children }) => ({
-            pathName: meta.pathName,
-            name: meta.stair ? children[0].name : name,
-            icon: meta.icon,
-            ...(children && !meta.stair && {
-                children: children.map(({ name, meta }) => ({
-                    name,
-                    icon: meta.icon,
-                    pathName: meta.pathName,
-                }))
-            })
-        }))
-        
+        // this.routes = this.$store.state.routes.map(({ meta, name, children }) => ({
+        //     pathName: meta.pathName,
+        //     name: meta.stair ? children[0].name : name,
+        //     icon: meta.icon,
+        //     ...(children && !meta.stair && {
+        //         children: children.map(({ name, meta }) => ({
+        //             name,
+        //             icon: meta.icon,
+        //             pathName: meta.pathName,
+        //         }))
+        //     })
+        // }))
+
+        // this.routes=this.mapRoutes(this.$store.state.routes)
+        this.routes=this.mapRoutes(getRouters())
     },
     mounted() { },
     methods: {
@@ -146,6 +155,21 @@ export default {
         changePage(index, indexPath) {
             this.$router.push({
                 name: index
+            })
+        },
+        mapRoutes(routes) {
+            return routes.map(({ meta, name, children }) => {
+                const routeObject = {
+                    name: meta.stair ? (children && children[0].name) : name,
+                    pathName: meta.pathName,
+                    icon: meta.icon,
+                }
+
+                if (children && !meta.stair) {
+                    routeObject.children = this.mapRoutes(children)
+                }
+
+                return routeObject
             })
         }
     }

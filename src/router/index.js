@@ -7,15 +7,15 @@ import { reqMenu } from '@/api'
 
 Vue.use(VueRouter)
 
-const originalPush = VueRouter.prototype.push;
+const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location, onResolve, onReject) {
-    if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject);
+    if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
     return originalPush.call(this, location).catch(err => {
         if (err.name !== 'NavigationDuplicated') {
-            throw err;
+            throw err
         }
-    });
-};
+    })
+}
 
 const routes = [
     {
@@ -31,7 +31,9 @@ const routes = [
         path: '/home',
         component: Layout,
         meta: {
-            pathName: '首页'
+            pathName: '首页',
+            icon:'icon-shouye',
+            stair: true
         },
         children: [
             {
@@ -46,11 +48,6 @@ const routes = [
         component: () => import('@/pages/404/404.vue')
     }
 ]
-
-// const router = new VueRouter({
-//     mode: 'hash',
-//     routes
-// })
 
 function createRouter() {
     return new VueRouter({
@@ -111,28 +108,38 @@ function loadView(viewPath) {
 
 
 function addRouting(routers) {
-    // if (Array.isArray(routers)) {
-    //     routers.forEach(r => {
-    //         addRouting(r)
-    //     })
-    // }
+    const processRoutes = (routes) => {
+        return routes.map(route => {
+            const topLevelRoute = { ...route }
+
+            if (topLevelRoute.component) {
+                topLevelRoute.component = loadView(topLevelRoute.component)
+            }
+
+            if (topLevelRoute.children && topLevelRoute.children.length > 0) {
+                topLevelRoute.children = processRoutes(topLevelRoute.children)
+            }
+            return topLevelRoute;
+        })
+    }
+
     routers.forEach(r => {
         const topLevelRoute = {
             ...r,
-            component: Layout
-        }
+            component: Layout,
+        };
+
         if (topLevelRoute.children && topLevelRoute.children.length > 0) {
-            topLevelRoute.children = topLevelRoute.children.map(child => ({
-                ...child,
-                component: loadView(child.component)
-            }))
+            topLevelRoute.children = processRoutes(topLevelRoute.children)
         }
+
         router.addRoute(topLevelRoute)
     })
 }
 
+
 function getRouters() {
-    const disRoutes = ['/', '*', '/login', '/home', '/menu']
+    const disRoutes = ['/', '*', '/login','/home']
     return [...routes, ...store.state.routes].filter(r => !disRoutes.includes(r.path))
 }
 

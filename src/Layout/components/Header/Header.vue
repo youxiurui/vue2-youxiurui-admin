@@ -5,8 +5,8 @@
                 <span>优秀瑞</span>
             </div>
             <div class="collapsed" @click="unpack">
-                <i class="el-icon-s-fold" v-if="fold"></i>
-                <i class="el-icon-s-unfold" v-else></i>
+                <i class="iconfont icon-shousuo" style="font-size: 26px;" v-if="fold"></i>
+                <i class="iconfont icon-zhankai" style="font-size: 26px;" v-else></i>
             </div>
             <div class="nav">
                 <el-breadcrumb separator="/">
@@ -21,11 +21,11 @@
                     <span style="position: relative;top: -1px;margin-left: 3px;">{{ weatherData.temp || 0 }}℃</span>
                 </div>
                 <div class="item">
-                    <i class="iconfont el-icon-sunny"></i>
-                    <!-- <i class="el-icon-moon"></i> -->
+                    <i class="iconfont icon-liangdian"></i>
+                    <!-- <i class="iconfont icon-yueliang"></i> -->
                 </div>
                 <div class="item" @click="fullScreen">
-                    <i class="iconfont el-icon-full-screen"></i>
+                    <i class="iconfont icon-quanping"></i>
                 </div>
                 <div class="item">
                     <a href="https://github.com/youxiurui/vue2-youxiurui-admin" style="text-decoration: none;">
@@ -195,4 +195,5 @@ export default {
 .iconfont {
     font-size: 20px;
 }
+
 </style>

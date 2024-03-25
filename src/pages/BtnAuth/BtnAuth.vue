@@ -11,6 +11,7 @@
     </div>
     <el-divider></el-divider>
     <span>使用方式：管理员按钮普通用户无法点击</span>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 

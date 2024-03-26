@@ -42,12 +42,14 @@ import {
   Descriptions,
   DescriptionsItem,
   Tag,
-  Tree
+  Tree,
+  DatePicker
 } from 'element-ui'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.config.productionTip = false
+
 
 Vue.use(Container)
 Vue.use(Header)
@@ -87,6 +89,7 @@ Vue.use(Descriptions)
 Vue.use(DescriptionsItem)
 Vue.use(Tag)
 Vue.use(Tree)
+Vue.use(DatePicker)
 
 Vue.prototype.$message = Message
 Vue.prototype.$alert = MessageBox

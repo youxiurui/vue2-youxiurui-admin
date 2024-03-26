@@ -1,14 +1,14 @@
 <template>
   <div class="menu">
     <div class="menu-left">
-      <el-tree :data="treeData" node-key="name" :expand-on-click-node="false" @node-click="handleNodeClick">
+      <el-tree :data="treeData" node-key="name" :expand-on-click-node="false">
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <span>{{ node.label }}</span>
           <span>
-            <el-button type="text" size="mini" @click="() => append(data)">
+            <el-button type="text" size="mini" @click="appNode(data)">
               添加
             </el-button>
-            <el-button type="text" size="mini" @click="() => append(data)">
+            <el-button type="text" size="mini" @click="appNode(data)">
               编辑
             </el-button>
             <el-popconfirm title="确定删除吗？">
@@ -42,7 +42,8 @@ export default {
         const node = {
           label: route.meta && route.meta.pathName,
           name: route.meta && route.meta.pathName,
-          stair: route.meta && route.meta.stair || false
+          stair: route.meta && route.meta.stair || false,
+          id:route.meta && route.meta.id
         }
         if (route.children && !route.meta.stair) {
           node.children = this.createTreeData(route.children)
@@ -50,10 +51,7 @@ export default {
         return node
       })
     },
-    handleNodeClick(data) {
-      console.log(data);
-    },
-    append(data) {
+    appNode(data) {
       console.log(data)
     },
     remove(data) {

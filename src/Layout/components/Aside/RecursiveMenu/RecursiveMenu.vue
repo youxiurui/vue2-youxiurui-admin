@@ -1,17 +1,15 @@
 <template>
-  <div>
-    <el-submenu v-if="route.children" :index="route.name || route.pathName">
-      <template #title>
-        <i class="iconfont" :class="route.icon"></i>
-        <span>{{ route.pathName }}</span>
-      </template>
-      <recursive-menu v-for="(childRoute, index) in route.children" :key="index" :route="childRoute"></recursive-menu>
-    </el-submenu>
-    <el-menu-item v-else :index="route.name || route.pathName">
+  <el-submenu v-if="route.children" :index="route.name || route.pathName">
+    <template #title>
       <i class="iconfont" :class="route.icon"></i>
       <span>{{ route.pathName }}</span>
-    </el-menu-item>
-  </div>
+    </template>
+    <recursive-menu v-for="(childRoute, index) in route.children" :key="index" :route="childRoute"></recursive-menu>
+  </el-submenu>
+  <el-menu-item v-else :index="route.name || route.pathName">
+    <i class="iconfont" :class="route.icon"></i>
+    <span>{{ route.pathName }}</span>
+  </el-menu-item>
 </template>
 
 <script>

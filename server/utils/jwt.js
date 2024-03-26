@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const secretKey = 'youxiurui'
 
 function encode(data) {
-    return jwt.sign({ data }, secretKey, { expiresIn: '1h' })
+    return jwt.sign({ data }, secretKey, { expiresIn: '12h' })
 }
 
 function decode(token) {

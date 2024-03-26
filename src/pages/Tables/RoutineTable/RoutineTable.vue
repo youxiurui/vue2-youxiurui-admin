@@ -1,31 +1,6 @@
 <template>
   <div class="condition-table">
-    <div class="condition-serch">
-      <el-form :inline="true" label-width="80px" :model="formSerch" ref="formSerch" class="demo-form-inline serch-form">
-        <el-form-item label="日期:">
-          <el-input v-model="formSerch.date" placeholder="请填写内容"></el-input>
-        </el-form-item>
-        <el-form-item label="姓名:">
-          <el-input v-model="formSerch.name" placeholder="请填写内容"></el-input>
-        </el-form-item>
-        <el-form-item label="省份:">
-          <el-input v-model="formSerch.province" placeholder="请填写内容"></el-input>
-        </el-form-item>
-        <el-form-item label="市区:">
-          <el-input v-model="formSerch.city" placeholder="请填写内容"></el-input>
-        </el-form-item>
-        <el-form-item label="地址:">
-          <el-input v-model="formSerch.address" placeholder="请填写内容"></el-input>
-        </el-form-item>
-        <el-form-item label="邮编:">
-          <el-input v-model="formSerch.zip" placeholder="请填写内容"></el-input>
-        </el-form-item>
-        <el-form-item class="query-btn">
-          <el-button type="primary" @click="onSubmit">查询</el-button>
-          <el-button @click="resetForm('formSerch')">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+    <SearchTable :form-search="formSearch" :form-btn="formBtn" @callBack="callBack" />
     <div class="table set-scroll">
       <el-table :data="tableData" border style="width: 100%">
         <el-table-column prop="date" label="日期">
@@ -55,8 +30,8 @@
         </el-tooltip>
       </div>
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        :current-page.sync="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="10" layout="sizes, prev, pager, next"
-        :total="100">
+        :current-page.sync="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="10"
+        layout="sizes, prev, pager, next" :total="100">
       </el-pagination>
       <div class="total">
         <span>共100条记录</span>
@@ -94,6 +69,7 @@
 </template>
 
 <script>
+import SearchTable from '@/components/SearchTable/SearchTable.vue'
 export default {
   data() {
     return {
@@ -216,24 +192,88 @@ export default {
         zip: ""
       },
       formLabelWidth: '120px',
-      formSerch: {
-        date: "",
-        name: "",
-        province: "",
-        city: "",
-        address: "",
-        zip: ""
-      }
+      formSearch: [
+        {
+          label: '姓名',
+          name: 'name',
+          type: 'input',
+          placeholder: '请填写内容'
+
+        },
+        {
+          label: '省份',
+          name: 'province',
+          type: 'input',
+          placeholder: '请填写内容'
+        },
+        {
+          label: '市区',
+          name: 'city',
+          type: 'input',
+          placeholder: '请填写内容'
+        },
+        {
+          label: '地址',
+          name: 'address',
+          type: 'input',
+          placeholder: '请填写内容'
+        },
+        {
+          label: '邮编',
+          name: 'zip',
+          type: 'input',
+          placeholder: '请填写内容'
+        },
+        {
+          label: '下拉选项',
+          name: 'select',
+          type: 'select',
+          options: [
+            {
+              value: '选项1',
+              label: '黄金糕'
+            }, {
+              value: '选项2',
+              label: '双皮奶'
+            }, {
+              value: '选项3',
+              label: '蚵仔煎'
+            }
+          ],
+          placeholder: '请选择'
+        },
+        {
+          label: '日期',
+          name: 'date',
+          type: 'date',
+          placeholder: '选择日期'
+        },
+      ],
+      formBtn: [
+        {
+          label: '查询',
+          name: 'query',
+          type: 'primary',
+          plain: false,
+          icon: ''
+        },
+        {
+          label: '重置',
+          name: 'reset',
+          plain: true,
+          icon: ''
+        }
+      ]
     }
+  },
+  components: {
+    SearchTable
   },
   mounted() {
   },
   methods: {
-    onSubmit() {
-      console.log('submit!')
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
+    callBack(data) {
+      console.log(data)
     },
     handleChange(row) {
       this.dialogFormVisible = true
@@ -275,27 +315,6 @@ export default {
   height: 100%;
   border-radius: 6px;
   padding: 10px;
-}
-
-.condition-serch {
-  width: 100%;
-  margin-bottom: 10px;
-  border: 1px solid #e6e6e6;
-  /* padding: 5px; */
-  border-radius: 6px;
-}
-
-.condition-serch .serch-form {
-  padding: 10px 10px 0 10px;
-}
-
-.condition-serch .query-btn {
-  left: 38px;
-  position: relative;
-}
-
-::v-deep .el-form-item {
-  margin-bottom: 10px;
 }
 
 .table {

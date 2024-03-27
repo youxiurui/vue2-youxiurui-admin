@@ -14,7 +14,7 @@
                     v-model="formData[item.name]"></el-date-picker>
             </el-form-item>
             <el-form-item class="serch-btn">
-                <el-button :icon="btn.icon" :plain="btn.plain" :type="btn.type" v-for="(btn, index) in formBtn"
+                <el-button :icon="btn.icon" :plain="btn.plain" :type="btn.type" v-for="(btn, index) in formBtn" :key="index"
                     @click="callBack(btn.name)">{{ btn.label }}</el-button>
             </el-form-item>
         </el-form>
@@ -38,6 +38,9 @@ export default {
             default: () => []
         }
     },
+    mounted(){
+     
+    },
     methods: {
         callBack(type) {
             if(type==='reset'){
@@ -53,7 +56,6 @@ export default {
 <style scoped>
 .search-table {
     width: 100%;
-    margin-bottom: 10px;
     border: 1px solid #e6e6e6;
     border-radius: 6px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="routine-table">
+  <div class="routine-table set-scroll">
     <div class="routine-search">
       <SearchTable :form-search="formSearch" :form-btn="formBtn" @callBack="callBack" />
     </div>
@@ -129,35 +129,23 @@ export default {
           placeholder: '选择日期'
         },
         {
-          label: '日期',
-          name: 'date',
-          type: 'date',
+          label: '测试1',
+          name: 'ceshi1',
+          type: 'input',
           placeholder: '选择日期'
         },
         {
-          label: '日期',
-          name: 'date',
-          type: 'date',
+          label: '测试2',
+          name: 'ceshi2',
+          type: 'input',
           placeholder: '选择日期'
         },
         {
-          label: '日期',
-          name: 'date',
-          type: 'date',
+          label: '测试3',
+          name: 'ceshi3',
+          type: 'input',
           placeholder: '选择日期'
-        },
-        {
-          label: '日期',
-          name: 'date',
-          type: 'date',
-          placeholder: '选择日期'
-        },
-        {
-          label: '日期',
-          name: 'date',
-          type: 'date',
-          placeholder: '选择日期'
-        },
+        }
       ],
       formBtn: [
         {
@@ -198,9 +186,9 @@ export default {
   height: 100%;
   border-radius: 6px;
   padding: 10px;
-  overflow: hidden;
+  overflow-y: scroll;
 }
-.routine-data{
-  
+.routine-search{
+    margin-bottom: 10px;
 }
 </style>

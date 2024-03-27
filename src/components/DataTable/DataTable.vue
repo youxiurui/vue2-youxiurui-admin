@@ -6,7 +6,7 @@
     </div>
     <div class="table">
       <el-table :data="tableData" border>
-        <el-table-column prop="date" label="日期">
+        <!-- <el-table-column prop="date" label="日期">
         </el-table-column>
         <el-table-column prop="name" label="姓名">
         </el-table-column>
@@ -18,10 +18,20 @@
         </el-table-column>
         <el-table-column prop="zip" label="邮编">
         </el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column prop="btn" label="操作" align="center">
           <template slot-scope="scope">
             <el-button type="text">编辑</el-button>
             <el-button type="text">删除</el-button>
+          </template>
+</el-table-column> -->
+        <el-table-column v-for="(column, index) in tableColumn" :key="column.prop" :prop="column.prop"
+          :label="column.label" align="center">
+          <template v-if="column.prop === 'btn'" slot-scope="scope">
+            <el-button type="text">编辑</el-button>
+            <el-button type="text">删除</el-button>
+          </template>
+          <template v-if="column.prop !== 'btn'" slot-scope="scope">
+            {{ scope.row[column.prop] }}
           </template>
         </el-table-column>
       </el-table>
@@ -45,6 +55,52 @@
 export default {
   data() {
     return {
+      tableColumn: [
+        {
+          label: '日期',
+          prop: 'date'
+        },
+        {
+          label: '姓名',
+          prop: 'name'
+        },
+        {
+          label: '省份',
+          prop: 'province'
+        },
+        {
+          label: '时区',
+          prop: 'city'
+        },
+        {
+          label: '地址',
+          prop: 'address'
+        },
+        {
+          label: '邮编',
+          prop: 'zip'
+        },
+        {
+          label: '操作',
+          prop: 'btn',
+          btns: [
+            {
+              label: '编辑',
+              name: 'edit',
+              type: 'primary',
+              plain: false,
+              icon: ''
+            },
+            {
+              label: '删除',
+              name: 'delete',
+              type: 'danger',
+              plain: false,
+              icon: ''
+            }
+          ]
+        }
+      ],
       tableData: [
         {
           "date": "2016-05-01",
@@ -151,29 +207,18 @@ export default {
 
 <style scoped>
 .data-table {
-  /* height: 100%; */
   border: 1px solid #e6e6e6;
   border-radius: 6px;
   padding: 10px;
-  /* overflow-y: scroll; */
 }
 
 .data-table .title {
   margin: 5px 0;
 }
 
-.table {
-  /* height: 100%; */
-}
+/* .table {
+} */
 
-.set-scroll::-webkit-scrollbar {
-  width: 3px;
-}
-
-.set-scroll::-webkit-scrollbar-thumb {
-  background-color: rgb(221, 222, 224);
-  border-radius: 6px;
-}
 
 .pagination {
   width: 100%;

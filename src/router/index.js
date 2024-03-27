@@ -133,9 +133,6 @@ function addRouting(routers,pathName='layout') {
     })
 }
 
-
-
-
 function getRouters() {
     const disRoutes = ['/', '*', '/login']
     return [...store.state.routes].filter(r => !disRoutes.includes(r.path))

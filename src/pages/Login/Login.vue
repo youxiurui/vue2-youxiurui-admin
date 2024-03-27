@@ -77,37 +77,6 @@ export default {
         this.$message.error('登录失败，请稍后重试')
       }
     }
-
-    // login(formName) {
-    //   this.$refs[formName].validate(async (valid) => {
-    //     if (!valid) {
-    //       this.$message.error('请输入账号和密码')
-    //       return
-    //     }
-    //     try {
-    //       const res = await reqLogin({ username: encrypt(this.form.username), password: encrypt(this.form.password) })
-    //       if (res.code !== 200) {
-    //         this.$message.warning(res.msg)
-    //         return
-    //       }
-    //       if (this.isRemember) {
-    //         localStorage.setItem('token', res.data.token)
-    //         localStorage.setItem('userInfo', encrypt(this.form.username))
-    //       } else {
-    //         sessionStorage.setItem('token', res.data.token)
-    //         sessionStorage.setItem('userInfo', encrypt(this.form.username))
-    //       }
-    //       const routes=await reqMenu()
-    //       this.$store.commit('SETROUTES', routes.data)
-    //       resetRouter()
-    //       addRouting(routes.data)
-    //       this.$message.success('登录成功')
-    //       this.$router.replace('/home')
-    //     } catch (error) {
-    //       console.log(error)
-    //     }
-    //   })
-    // }
   }
 }
 

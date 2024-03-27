@@ -31,6 +31,17 @@ body {
 
 #app {
   height: 100%;
+  min-height: 700px;
   min-width: 1200px;
 }
+
+.set-scroll::-webkit-scrollbar {
+  width: 3px;
+}
+
+.set-scroll::-webkit-scrollbar-thumb {
+  background-color: rgb(221, 222, 224);
+  border-radius: 6px;
+}
+
 </style>

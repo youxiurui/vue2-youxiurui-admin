@@ -1,14 +1,13 @@
 module.exports=[
     {
         type:'all',
-        path: "/components",
+        path: "components",
         name: "components",
         meta: {
             pathName: "组件",
             icon: "icon-kaifazujian",
-            id:'1'
         },
-        component: 'Layout',
+        component: "pages/Components/index",
         children: [
             {
                 path: "tables",
@@ -16,19 +15,17 @@ module.exports=[
                 meta: {
                     pathName: "表格",
                     icon: "icon-biaoge",
-                    id:'2'
                 },
-                component: "pages/Tables/index",
+                component: "pages/Components/Tables/index",
                 children:[
                     {
-                        path: "table",
-                        name: "table",
+                        path: "routineTable",
+                        name: "routineTable",
                         meta: {
                             pathName: "常用表格",
                             icon: "icon-biaoge",
-                            id:'3'
                         },
-                        component: "pages/Tables/RoutineTable/RoutineTable",
+                        component: "pages/Components/Tables/RoutineTable/RoutineTable",
                     }
                 ]
             },
@@ -38,19 +35,17 @@ module.exports=[
                 meta: {
                     pathName: "表单",
                     icon: "icon-biaodan",
-                    id:'4'
                 },
-                component: "pages/Forms/index",
+                component: "pages/Components/Forms/index",
                 children:[
                     {
-                        path: "form",
-                        name: "form",
+                        path: "routineForm",
+                        name: "routineForm",
                         meta: {
                             pathName: "常用表单",
                             icon: "icon-biaodan",
-                            id:'5'
                         },
-                        component: "pages/Forms/RoutineForm/RoutineForm",
+                        component: "pages/Components/Forms/RoutineForm/RoutineForm",
                     }
                 ]
             }
@@ -58,15 +53,13 @@ module.exports=[
     },
     {
         type:'all',
-        path: "/authManage",
+        path: "authManage",
         name: "authManage",
         meta: {
             pathName: "权限管理",
             icon: "icon-quanxian",
-            stair: false,
-            id:'6'
         },
-        component: "Layout",
+        component: "pages/AuthManage/index",
         children: [
             {
                 path: "btnAuth",
@@ -74,52 +67,29 @@ module.exports=[
                 meta: {
                     pathName: "按钮权限",
                     icon: "icon-anniu",
-                    id:'7'
                 },
-                component: "pages/BtnAuth/BtnAuth",
+                component: "pages/AuthManage/BtnAuth/BtnAuth",
             }
         ]
     },
     {
         type:'all',
-        path: "/setting",
+        path: "setting",
+        name:'setting',
         meta: {
             pathName: "系统配置",
             icon: "icon-shezhipeizhi",
-            stair: true,
-            id:'8'
         },
-        component: "Layout",
-        children: [
-            {
-                path: "",
-                name: "setting",
-                meta:{
-                    id:'9'
-                },
-                component: "pages/Setting/Setting"
-            }
-        ]
+        component:"pages/Setting/Setting",
     },
     {
         type:'admin',
-        path: "/menu",
+        path: "menu",
+        name:'menu',
         meta: {
             pathName: "菜单管理",
             icon: "icon-caidan1",
-            stair: true,
-            id:'10'
         },
-        component: "Layout",
-        children: [
-            {
-                path: "",
-                name: "menu",
-                meta:{
-                    id:'11'
-                },
-                component: "pages/Menu/Menu"
-            }
-        ]
+        component: "pages/Menu/Menu",
     }
 ]

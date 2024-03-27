@@ -42,10 +42,8 @@ export default {
         const node = {
           label: route.meta && route.meta.pathName,
           name: route.meta && route.meta.pathName,
-          stair: route.meta && route.meta.stair || false,
-          id:route.meta && route.meta.id
         }
-        if (route.children && !route.meta.stair) {
+        if (route.children) {
           node.children = this.createTreeData(route.children)
         }
         return node

@@ -8,7 +8,9 @@
 export default {
     methods:{
         back(){
-            this.$router.replace('/home')
+            this.$router.replace({
+                name:'home'
+            })
         }
     }
 }

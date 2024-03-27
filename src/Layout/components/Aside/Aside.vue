@@ -104,51 +104,10 @@ export default {
         }
     },
     created() {
-        // const routes = this.$store.state.routes
-        // routes.forEach(route => {
-        //     const r = {
-        //         pathName: '',
-        //         name: '',
-        //         icon: '',
-        //     }
-        //     if (route.meta.stair) {
-        //         r.pathName = route.meta.pathName
-        //         r.name = route.children[0].name
-        //         r.icon = route.meta.icon
-        //     } else {
-        //         r.pathName = route.meta.pathName
-        //         r.name = route.name
-        //         r.icon = route.meta.icon
-        //         r.children = []
-        //         route.children.forEach(c => {
-        //             r.children.push({
-        //                 name: c.name,
-        //                 icon: c.meta.icon,
-        //                 pathName: c.meta.pathName
-        //             })
-        //         })
-        //     }
-        //     this.routes.push(r)
-        // })
-
-        // this.routes = this.$store.state.routes.map(({ meta, name, children }) => ({
-        //     pathName: meta.pathName,
-        //     name: meta.stair ? children[0].name : name,
-        //     icon: meta.icon,
-        //     ...(children && !meta.stair && {
-        //         children: children.map(({ name, meta }) => ({
-        //             name,
-        //             icon: meta.icon,
-        //             pathName: meta.pathName,
-        //         }))
-        //     })
-        // }))
-
-        // this.routes=this.mapRoutes(this.$store.state.routes)
         this.routes=this.mapRoutes(getRouters())
     },
     mounted() { },
-    methods: {
+    methods: {      
         change() {
             this.isCollapse = !this.isCollapse
         },
@@ -160,15 +119,13 @@ export default {
         mapRoutes(routes) {
             return routes.map(({ meta, name, children }) => {
                 const routeObject = {
-                    name: meta.stair ? (children && children[0].name) : name,
+                    name: name,
                     pathName: meta.pathName,
                     icon: meta.icon,
                 }
-
-                if (children && !meta.stair) {
+                if (children) {
                     routeObject.children = this.mapRoutes(children)
                 }
-
                 return routeObject
             })
         }

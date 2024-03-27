@@ -70,7 +70,9 @@ export default {
         addRouting(routes.data)
 
         this.$message.success('登录成功')
-        this.$router.push('/home')
+        this.$router.push({
+          name: 'home'
+        })
       } catch (error) {
         this.$message.error('登录失败，请稍后重试')
       }

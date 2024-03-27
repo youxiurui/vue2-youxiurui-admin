@@ -1,6 +1,6 @@
 <template>
     <div class="search-table">
-        <el-form inline label-width="80px" :model="formData" ref="formSerch" class="serch-form">
+        <el-form inline label-width="80px" class="serch-form">
             <el-form-item label-width="80px" :label="item.label" v-for="(item, index) in formSearch" :key="item.name">
                 <el-input v-if="item.type === 'input'" v-model="formData[item.name]"
                     :placeholder="item.placeholder"></el-input>
@@ -40,6 +40,9 @@ export default {
     },
     methods: {
         callBack(type) {
+            if(type==='reset'){
+                this.formData={}
+            }
             this.$emit('callBack', { ...this.formData, type })
         }
     }

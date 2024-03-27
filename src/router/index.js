@@ -28,19 +28,19 @@ const routes = [
         component: () => import('@/pages/Login/Login.vue')
     },
     {
-        path: '/home',
+        path: '/layout',
+        name: 'layout',
         component: Layout,
-        meta: {
-            pathName: '首页',
-            icon:'icon-shouye',
-            stair: true
-        },
         children: [
             {
-                path: '',
+                path: 'home',
                 name: 'home',
-                component: () => import('@/pages/Home/Home.vue')
-            }
+                component: () => import('@/pages/Home/Home.vue'),
+                meta: {
+                    pathName: '首页',
+                    icon: 'icon-shouye',
+                }
+            },
         ]
     },
     {
@@ -106,8 +106,7 @@ function loadView(viewPath) {
     return () => import(`@/${viewPath}`)
 }
 
-
-function addRouting(routers) {
+function addRouting(routers,pathName='layout') {
     const processRoutes = (routes) => {
         return routes.map(route => {
             const topLevelRoute = { ...route }
@@ -119,28 +118,27 @@ function addRouting(routers) {
             if (topLevelRoute.children && topLevelRoute.children.length > 0) {
                 topLevelRoute.children = processRoutes(topLevelRoute.children)
             }
-            return topLevelRoute;
+
+            return topLevelRoute
         })
     }
-
     routers.forEach(r => {
-        const topLevelRoute = {
-            ...r,
-            component: Layout,
-        };
-
-        if (topLevelRoute.children && topLevelRoute.children.length > 0) {
-            topLevelRoute.children = processRoutes(topLevelRoute.children)
+        if (r.component) {
+            r.component = loadView(r.component)
         }
-
-        router.addRoute(topLevelRoute)
+        if (r.children) {
+            r.children = processRoutes(r.children)
+        }
+        router.addRoute(pathName, r)
     })
 }
 
 
+
+
 function getRouters() {
-    const disRoutes = ['/', '*', '/login','/home']
-    return [...routes, ...store.state.routes].filter(r => !disRoutes.includes(r.path))
+    const disRoutes = ['/', '*', '/login']
+    return [...store.state.routes].filter(r => !disRoutes.includes(r.path))
 }
 
 export { addRouting, getRouters, resetRouter }

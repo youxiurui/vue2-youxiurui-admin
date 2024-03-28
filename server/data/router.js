@@ -22,7 +22,7 @@ module.exports=[
                         path: "routineTable",
                         name: "routineTable",
                         meta: {
-                            pathName: "常用表格",
+                            pathName: "基础表格",
                             icon: "icon-biaoge",
                         },
                         component: "pages/Components/Tables/RoutineTable/RoutineTable",
@@ -42,7 +42,7 @@ module.exports=[
                         path: "routineForm",
                         name: "routineForm",
                         meta: {
-                            pathName: "常用表单",
+                            pathName: "基础表单",
                             icon: "icon-biaodan",
                         },
                         component: "pages/Components/Forms/RoutineForm/RoutineForm",

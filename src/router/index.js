@@ -67,10 +67,10 @@ const router = createRouter()
 router.beforeEach(async (to, from, next) => {
     let token = localStorage.getItem('token') || sessionStorage.getItem('token')
     if (to.path === '/login' && token) {
-        next('/home')
+        next({ name: 'home' })
     } else if (to.path !== '/login' && !token) {
         Message.warning('请先登录')
-        next('/login')
+        next({ name: 'login' })
     } else if (to.path !== '/login' && token) {
         const base64Url = token.split('.')[1]
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
@@ -81,7 +81,7 @@ router.beforeEach(async (to, from, next) => {
             Message.warning('登录过期，请重新登录')
             localStorage.clear()
             sessionStorage.clear()
-            next('/login')
+            next({ name: 'login' })
         } else {
             if (store.state.routes.length === 0) {
                 try {
@@ -106,7 +106,7 @@ function loadView(viewPath) {
     return () => import(`@/${viewPath}`)
 }
 
-function addRouting(routers,pathName='layout') {
+function addRouting(routers, pathName = 'layout') {
     const processRoutes = (routes) => {
         return routes.map(route => {
             const topLevelRoute = { ...route }

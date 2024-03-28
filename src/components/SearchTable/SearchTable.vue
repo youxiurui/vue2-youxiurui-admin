@@ -1,20 +1,20 @@
 <template>
     <div class="search-table">
         <el-form inline label-width="80px" class="serch-form">
-            <el-form-item label-width="80px" :label="item.label" v-for="(item, index) in formSearch" :key="item.name">
-                <el-input v-if="item.type === 'input'" v-model="formData[item.name]"
+            <el-form-item label-width="80px" :label="item.label" v-for="(item, index) in tableSearch" :key="item.name">
+                <el-input v-if="item.type === 'input'" v-model="tableData[item.name]"
                     :placeholder="item.placeholder"></el-input>
-                <el-select v-if="item.type === 'select'" v-model="formData[item.name]" :placeholder="item.placeholder">
+                <el-select v-if="item.type === 'select'" v-model="tableData[item.name]" :placeholder="item.placeholder">
                     <el-option v-for="option in item.options" :key="option.value" :label="option.label"
                         :value="option.value">
                     </el-option>
                 </el-select>
                 <el-date-picker v-if="item.type === 'date'" type="date" format="yyyy-MM-dd"
                     value-format="yyyy-MM-dd" :placeholder="item.placeholder"
-                    v-model="formData[item.name]"></el-date-picker>
+                    v-model="tableData[item.name]"></el-date-picker>
             </el-form-item>
             <el-form-item class="serch-btn">
-                <el-button :icon="btn.icon" :plain="btn.plain" :type="btn.type" v-for="(btn, index) in formBtn" :key="index"
+                <el-button v-for="(btn, index) in tableSearchBtn" :icon="btn.icon" :plain="btn.plain" :type="btn.type" :key="index"
                     @click="callBack(btn.name)">{{ btn.label }}</el-button>
             </el-form-item>
         </el-form>
@@ -25,15 +25,15 @@
 export default {
     data() {
         return {
-            formData: {},
+            tableData: {},
         }
     },
     props: {
-        formSearch: {
+        tableSearch: {
             type: Array,
             default: () => []
         },
-        formBtn: {
+        tableSearchBtn: {
             type: Array,
             default: () => []
         }
@@ -44,9 +44,9 @@ export default {
     methods: {
         callBack(type) {
             if(type==='reset'){
-                this.formData={}
+                this.tableData={}
             }
-            this.$emit('callBack', { ...this.formData, type })
+            this.$emit('callBack', { ...this.tableData, type })
         }
     }
 }

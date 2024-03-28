@@ -1,10 +1,11 @@
 <template>
   <div class="routine-table set-scroll">
     <div class="routine-search">
-      <SearchTable :form-search="formSearch" :form-btn="formBtn" @callBack="callBack" />
+      <SearchTable :table-search="tableSearch" :table-search-btn="tableSearchBtn" @callBack="callBack" />
     </div>
     <div class="routine-data">
-      <DataTable />
+      <DataTable :table-title-btn="tableTitleBtn" :table-data="tableData" :table-column="tableColumn"
+      :bottom-btn="bottomBtn" :pagination="pagination" @callBack="callBack" />
     </div>
     <!-- <div class="pool">
       <el-dialog top="80px" title="人员信息" :visible.sync="dialogFormVisible">
@@ -44,23 +45,6 @@ export default {
   data() {
     return {
       currentPage: 1,
-      gridData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }],
       dialogTableVisible: false,
       dialogFormVisible: false,
       form: {
@@ -71,8 +55,7 @@ export default {
         address: "",
         zip: ""
       },
-      formLabelWidth: '120px',
-      formSearch: [
+      tableSearch: [
         {
           label: '姓名',
           name: 'name',
@@ -147,7 +130,7 @@ export default {
           placeholder: '选择日期'
         }
       ],
-      formBtn: [
+      tableSearchBtn: [
         {
           label: '查询',
           name: 'query',
@@ -161,7 +144,245 @@ export default {
           plain: true,
           icon: ''
         }
-      ]
+      ],
+      tableData: [
+        {
+          "date": "2016-05-01",
+          "name": "王小虎0",
+          "province": "北京",
+          "city": "东城区",
+          "address": "北京市东城区东华门街道1号",
+          "zip": "100010",
+          "ceshi1": '1',
+          "ceshi2": '2',
+        },
+        {
+          "date": "2016-05-01",
+          "name": "王小虎1",
+          "province": "北京",
+          "city": "东城区",
+          "address": "北京市东城区东华门街道1号",
+          "zip": "100010"
+        },
+        {
+          "date": "2016-05-02",
+          "name": "王小虎2",
+          "province": "天津",
+          "city": "和平区",
+          "address": "天津市和平区和平道2号",
+          "zip": "300041"
+        },
+        {
+          "date": "2016-05-01",
+          "name": "王小虎1",
+          "province": "北京",
+          "city": "东城区",
+          "address": "北京市东城区东华门街道1号",
+          "zip": "100010"
+        },
+        {
+          "date": "2016-05-02",
+          "name": "王小虎2",
+          "province": "天津",
+          "city": "和平区",
+          "address": "天津市和平区和平道2号",
+          "zip": "300041"
+        },
+        {
+          "date": "2016-05-03",
+          "name": "王小虎3",
+          "province": "河北",
+          "city": "石家庄市",
+          "address": "河北省石家庄市长安区3号",
+          "zip": "050011"
+        },
+        {
+          "date": "2016-05-04",
+          "name": "王小虎4",
+          "province": "山西",
+          "city": "太原市",
+          "address": "山西省太原市迎泽区4号",
+          "zip": "030024"
+        },
+        {
+          "date": "2016-05-05",
+          "name": "王小虎5",
+          "province": "内蒙古",
+          "city": "呼和浩特市",
+          "address": "内蒙古自治区呼和浩特市回民区5号",
+          "zip": "010030"
+        },
+        {
+          "date": "2016-05-06",
+          "name": "王小虎6",
+          "province": "辽宁",
+          "city": "沈阳市",
+          "address": "辽宁省沈阳市沈河区6号",
+          "zip": "110013"
+        },
+        {
+          "date": "2016-05-07",
+          "name": "王小虎7",
+          "province": "吉林",
+          "city": "长春市",
+          "address": "吉林省长春市宽城区7号",
+          "zip": "130051"
+        },
+        {
+          "date": "2016-05-08",
+          "name": "王小虎8",
+          "province": "黑龙江",
+          "city": "哈尔滨市",
+          "address": "黑龙江省哈尔滨市道里区8号",
+          "zip": "150010"
+        },
+        {
+          "date": "2016-05-09",
+          "name": "王小虎9",
+          "province": "上海",
+          "city": "黄浦区",
+          "address": "上海市黄浦区南京东路9号",
+          "zip": "200001"
+        },
+      ],
+      tableColumn: [
+        {
+          label: '日期',
+          prop: 'date',
+          minWidth: '100'
+        },
+        {
+          label: '姓名',
+          prop: 'name',
+          minWidth: '80'
+        },
+        {
+          label: '省份',
+          prop: 'province',
+          minWidth: '80'
+        },
+        {
+          label: '时区',
+          prop: 'city',
+          minWidth: '80'
+        },
+        {
+          label: '地址',
+          prop: 'address',
+          minWidth: '150',
+          showTooltip: true
+        },
+        {
+          label: '邮编',
+          prop: 'zip',
+          minWidth: '80'
+        },
+        {
+          label: '测试1',
+          prop: 'ceshi1',
+          minWidth: '100'
+        },
+        {
+          label: '测试2',
+          prop: 'ceshi2',
+          minWidth: '100'
+        },
+        {
+          label: '测试3',
+          prop: 'ceshi3',
+          minWidth: '100'
+        },
+        {
+          label: '测试4',
+          prop: 'ceshi4',
+          minWidth: '100'
+        },
+        {
+          label: '测试5',
+          prop: 'ceshi5',
+          minWidth: '100'
+        },
+        {
+          label: '测试6',
+          prop: 'ceshi6',
+          minWidth: '100'
+        },
+        {
+          label: '测试7',
+          prop: 'ceshi7',
+          minWidth: '100'
+        },
+        {
+          label: '操作',
+          prop: 'btn',
+          minWidth: '150',
+          fixed: 'right',
+          btns: [
+            {
+              label: '编辑',
+              name: 'edit',
+              type: 'primary',
+              size: 'mini',
+              plain: false,
+              icon: ''
+            },
+            {
+              label: '删除',
+              name: 'delete',
+              type: 'danger',
+              size: 'mini',
+              plain: false,
+              icon: ''
+            },
+            {
+              label: '测试',
+              name: 'ceshi',
+              type: 'danger',
+              size: 'mini',
+              plain: false,
+              icon: ''
+            }
+          ]
+        }
+      ],
+      tableTitleBtn: [
+        {
+          label: '编辑',
+          name: 'edit',
+          type: 'primary',
+          size: 'small',
+          plain: false,
+          icon: ''
+        },
+        {
+          label: '删除',
+          name: 'delete',
+          type: 'danger',
+          size: 'small',
+          plain: false,
+          icon: ''
+        },
+        {
+          label: '测试',
+          name: 'ceshi',
+          type: 'danger',
+          size: 'small',
+          plain: false,
+          icon: ''
+        }
+      ],
+      bottomBtn: [
+        {
+          content: '导出',
+          name: 'export',
+          icon: 'icon-daochu'
+        }
+      ],
+      pagination: {
+        pageSize: 10,
+        pageSizes: [10, 20, 30, 40],
+        total: 100
+      }
     }
   },
   components: {
@@ -188,7 +409,8 @@ export default {
   padding: 10px;
   overflow-y: scroll;
 }
-.routine-search{
-    margin-bottom: 10px;
+
+.routine-search {
+  margin-bottom: 10px;
 }
 </style>

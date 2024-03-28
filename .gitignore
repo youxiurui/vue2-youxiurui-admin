@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 dist
+dist.rar
+server.rar
 
 
 # local env files

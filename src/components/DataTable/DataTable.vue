@@ -11,7 +11,7 @@
           align="center">
           <template v-if="column.prop === 'btn'" v-slot="scope">
             <el-button class="btn" v-for="(btn, index) in column.btns" :size='btn.size' :icon="btn.icon"
-              :plain="btn.plain" :type="btn.type" @click="dataClick(scope.row)">
+              :plain="btn.plain" :type="btn.type" @click="dataClick(scope.row,btn.name)">
               {{ btn.label }}
             </el-button>
           </template>
@@ -28,7 +28,7 @@
         </el-tooltip>
       </div>
       <el-pagination :page-sizes="pagination.pageSizes" :page-size="pagination.pageSize"
-        layout="sizes, prev, pager, next,jumper" :total="pagination.total"  @current-change="handleCurrentChange">
+        layout="sizes, prev, pager, next,jumper" :total="pagination.total" @size-change="handleSizeChange" @current-change="handleCurrentChange">
       </el-pagination>
       <div class="total">
         <span>共{{ pagination.total }}条记录</span>
@@ -66,19 +66,32 @@ export default {
   },
   methods: {
     titleClick(name) {
-      this.callBack(name)
+      this.callBack({
+        type: name,
+      })
     },
-    dataClick(data) {
-      this.callBack(data)
+    dataClick(data,name) {
+      this.callBack({
+        type: name,
+        data
+      })
     },
     bottomBtnClick(name) {
-      this.callBack(name)
+      this.callBack({
+        type: name,
+      })
+    },
+    handleSizeChange(pageSize){
+      this.callBack({
+        type:'pagination',
+        pageSize:pageSize
+      })
     },
     handleCurrentChange(val){
-      const params={
-        pageSize:val
-      }
-      this.callBack(params)
+      this.callBack({
+        type:'pagination',
+        page:val
+      })
     },
     callBack(params) {
       this.$emit('callBack', params)

@@ -35,6 +35,7 @@ const authToken=(req,res,next)=>{
 app.use('/user',router.login)
 app.use('/auth',authToken, router.auth)
 app.use('/weather',authToken, router.weather)
+app.use('/table',authToken, router.table)
 
 
 app.use('/', (req, res) => {

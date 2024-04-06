@@ -26,6 +26,15 @@ module.exports=[
                             icon: "icon-biaoge",
                         },
                         component: "pages/Components/Tables/RoutineTable/RoutineTable",
+                    },
+                    {
+                        path: "configurableTable",
+                        name: "configurableTable",
+                        meta: {
+                            pathName: "可配置表格",
+                            icon: "icon-biaoge",
+                        },
+                        component: "pages/Components/Tables/ConfigurableTable/ConfigurableTable",
                     }
                 ]
             },

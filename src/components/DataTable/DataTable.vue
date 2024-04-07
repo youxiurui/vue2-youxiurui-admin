@@ -66,35 +66,35 @@ export default {
   },
   methods: {
     titleClick(name) {
-      this.callBack({
+      this.callBackTable({
         type: name,
       })
     },
     dataClick(data,name) {
-      this.callBack({
+      this.callBackTable({
         type: name,
         data
       })
     },
     bottomBtnClick(name) {
-      this.callBack({
+      this.callBackTable({
         type: name,
       })
     },
     handleSizeChange(pageSize){
-      this.callBack({
+      this.callBackTable({
         type:'pagination',
         pageSize:pageSize
       })
     },
     handleCurrentChange(val){
-      this.callBack({
+      this.callBackTable({
         type:'pagination',
         page:val
       })
     },
-    callBack(params) {
-      this.$emit('callBack', params)
+    callBackTable(params) {
+      this.$emit('callBackTable', params)
     }
   }
 }

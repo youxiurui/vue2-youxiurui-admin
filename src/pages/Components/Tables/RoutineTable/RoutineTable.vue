@@ -1,60 +1,36 @@
 <template>
   <div class="routine-table set-scroll">
     <div class="routine-search">
-      <SearchTable :table-search="tableSearch" :table-search-btn="tableSearchBtn" @callBack="callBack" />
+      <SearchTable :table-search="tableSearch" :table-search-btn="tableSearchBtn" @callBackTable="callBackTable" />
     </div>
     <div class="routine-data">
       <DataTable :table-title-btn="tableTitleBtn" :table-data="tableData" :table-column="tableColumn"
-        :bottom-btn="bottomBtn" :pagination="pagination" @callBack="callBack" />
+        :bottom-btn="bottomBtn" :pagination="pagination" @callBackTable="callBackTable" />
     </div>
-    <div class="pool">
-      <el-dialog top="80px" title="人员信息" :visible.sync="dialogFormVisible">
-        <el-form :model="form">
-          <el-form-item label="日期" :label-width="formLabelWidth">
-            <el-input v-model="form.date" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="姓名" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="省份" :label-width="formLabelWidth">
-            <el-input v-model="form.province" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="市区" :label-width="formLabelWidth">
-            <el-input v-model="form.city" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="地址" :label-width="formLabelWidth">
-            <el-input v-model="form.address" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="邮编" :label-width="formLabelWidth">
-            <el-input v-model="form.zip" autocomplete="off"></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-        </div>
-      </el-dialog>
-    </div>
+    <Dialog @callBackDialog="callBackDialog" :title="title" :dialogFormVisible="dialogFormVisible" :form="form"
+      :formItem="formItem" />
   </div>
 </template>
 
 <script>
 import SearchTable from '@/components/SearchTable/SearchTable.vue'
 import DataTable from '@/components/DataTable/DataTable.vue'
-import { reqTableData,reqAddTable } from '@/api'
+import Dialog from '@/components/Dialog/Dialog.vue'
+import { reqTableData, reqAddTable } from '@/api'
 export default {
   data() {
     return {
-      formLabelWidth: '50px',
       dialogFormVisible: false,
-      form: {
-        date: "",
-        name: "",
-        province: "",
-        city: "",
-        address: "",
-        zip: ""
-      },
+      title: '',
+      form: {},
+      formItem: [
+        { type: 'date', label: '日期', labelWidth: '50px' },
+        { type: 'name', label: '姓名', labelWidth: '50px' },
+        { type: 'province', label: '省份', labelWidth: '50px' },
+        { type: 'city', label: '市区', labelWidth: '50px' },
+        { type: 'address', label: '地址', labelWidth: '50px' },
+        { type: 'zip', label: '邮编', labelWidth: '50px' }
+      ],
       tableSearch: [
         {
           label: '姓名',
@@ -215,13 +191,14 @@ export default {
   },
   components: {
     SearchTable,
-    DataTable
+    DataTable,
+    Dialog
   },
   mounted() {
     this.getTableData()
   },
   methods: {
-    callBack(params) {
+    callBackTable(params) {
       console.log(params)
       switch (params.type) {
         case 'pagination':
@@ -231,10 +208,12 @@ export default {
           break
         case 'edit':
           this.dialogFormVisible = true
+          this.title = '编辑'
           this.form = JSON.parse(JSON.stringify(params.data))
           break
         case 'add':
           this.dialogFormVisible = true
+          this.title = '新增'
           this.form = {}
           break
         case 'delete':
@@ -248,6 +227,18 @@ export default {
               message: '删除成功!'
             })
           }).catch(() => { })
+          break
+      }
+    },
+    callBackDialog(params) {
+      switch (params.type) {
+        case 'close':
+        case 'cancel':
+          this.dialogFormVisible = params.dialogFormVisible
+          break
+        case 'verify':
+          console.log(this.form)
+          this.dialogFormVisible = false
           break
       }
     },

@@ -15,7 +15,7 @@
             </el-form-item>
             <el-form-item class="serch-btn">
                 <el-button v-for="(btn, index) in tableSearchBtn" :icon="btn.icon" :plain="btn.plain" :type="btn.type" :key="index"
-                    @click="callBack(btn.name)">{{ btn.label }}</el-button>
+                    @click="callBackTable(btn.name)">{{ btn.label }}</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -42,11 +42,11 @@ export default {
      
     },
     methods: {
-        callBack(type) {
+        callBackTable(type) {
             if(type==='reset'){
                 this.tableData={}
             }
-            this.$emit('callBack', { ...this.tableData, type })
+            this.$emit('callBackTable', { ...this.tableData, type })
         }
     }
 }

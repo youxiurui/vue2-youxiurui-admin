@@ -1,6 +1,6 @@
 <template>
     <div class="aside">
-        <el-menu default-active="1-4-1" class="el-menu-vertical-demo menu" :collapse="isCollapse"
+        <el-menu :default-active="currentMenu" class="el-menu-vertical-demo menu" :collapse="isCollapse"
             :collapse-transition="false" @select="changePage">
             <el-menu-item index="home">
                 <i class="iconfont icon-shouye"></i>
@@ -17,7 +17,8 @@ import { getRouters } from '@/router'
 export default {
     data() {
         return {
-            routes: []
+            routes: [],
+            currentMenu:''
         }
     },
     components:{
@@ -27,6 +28,18 @@ export default {
         isCollapse: {
             type: Boolean,
             default: false
+        },
+        currentTag:{
+            type:String,
+            default:'home'
+        }
+    },
+    watch:{
+        currentTag:{
+            handler(val){
+                this.currentMenu=val
+            },
+            immediate:true
         }
     },
     created() {

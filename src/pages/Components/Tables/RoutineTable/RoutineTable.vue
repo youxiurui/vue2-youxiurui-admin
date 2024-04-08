@@ -63,24 +63,24 @@ export default {
           type: 'input',
           placeholder: '请填写内容'
         },
-        {
-          label: '下拉选项',
-          name: 'select',
-          type: 'select',
-          options: [
-            {
-              value: '选项1',
-              label: '黄金糕'
-            }, {
-              value: '选项2',
-              label: '双皮奶'
-            }, {
-              value: '选项3',
-              label: '蚵仔煎'
-            }
-          ],
-          placeholder: '请选择'
-        },
+        // {
+        //   label: '下拉选项',
+        //   name: 'select',
+        //   type: 'select',
+        //   options: [
+        //     {
+        //       value: '选项1',
+        //       label: '黄金糕'
+        //     }, {
+        //       value: '选项2',
+        //       label: '双皮奶'
+        //     }, {
+        //       value: '选项3',
+        //       label: '蚵仔煎'
+        //     }
+        //   ],
+        //   placeholder: '请选择'
+        // },
         {
           label: '日期',
           name: 'date',
@@ -121,7 +121,7 @@ export default {
           minWidth: '80'
         },
         {
-          label: '时区',
+          label: '市区',
           prop: 'city',
           minWidth: '80'
         },

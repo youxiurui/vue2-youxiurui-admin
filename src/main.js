@@ -95,6 +95,11 @@ Vue.prototype.$message = Message
 Vue.prototype.$alert = MessageBox
 Vue.prototype.$confirm = MessageBox.confirm
 
+Vue.config.errorHandler = (err, instance, info) => {
+  console.log('错误信息',err)
+  console.log('错误组件',instance)
+  console.log('错误位置',info)
+}
 new Vue({
   render: h => h(App),
   store,

@@ -5,13 +5,28 @@
 </template>
 
 <script>
+import { reqLogOut } from '@/api'
+import { decrypt } from '@/utils/crypto'
 export default {
   name: 'App',
   components: {
   },
   mounted() {
+    // window.addEventListener('beforeunload', this.logOut())
   },
   methods: {
+    async logOut() {
+      const id = localStorage.getItem('conversation') || sessionStorage.getItem('conversation')
+      if(!id) return
+      const res =await reqLogOut({ id: decrypt(id) })
+      if (res.code === 200) {
+        localStorage.clear()
+        sessionStorage.clear()
+      }
+    }
+  },
+  beforeDestroy() {
+    // window.removeEventListener('beforeunload', this.logOut())
   }
 }
 </script>
@@ -43,5 +58,4 @@ body {
   background-color: rgb(221, 222, 224);
   border-radius: 6px;
 }
-
 </style>

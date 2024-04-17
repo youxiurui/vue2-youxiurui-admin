@@ -6,7 +6,7 @@
             {{ tag.name }}
         </el-tag> -->
         <TransitionGroup tag="ul" name="slide">
-            <el-tag class="tag-item" :class="{ 'active': active === tag.name }" v-for="(tag, index) in tags"
+            <el-tag class="tag-item" :class="{ 'tag-active': active === tag.name }" v-for="(tag, index) in tags"
                 :key="tag.name" :closable="!noRemove.includes(tag.name)"
                 @contextmenu.prevent.native="showMenu($event, index)" @click="click(tag.name, tag.path, index)"
                 @close="close(tag.name)">
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import {encrypt,decrypt} from '@/utils/crypto'
 export default {
     data() {
         return {
@@ -72,12 +73,12 @@ export default {
         },
         active: {
             handler(val) {
-                sessionStorage.setItem('activeTag', JSON.stringify(val))
+                sessionStorage.setItem('activeTag', JSON.stringify(encrypt(val)))
             }
         },
         tags: {
-            handler(newVal) {
-                sessionStorage.setItem('tags', JSON.stringify(newVal))
+            handler(val) {
+                sessionStorage.setItem('tags', JSON.stringify(encrypt(JSON.stringify(val))))
             }
         }
     },
@@ -86,11 +87,11 @@ export default {
         const tags = sessionStorage.getItem('tags')
         const activeTag = sessionStorage.getItem('activeTag')
         if (tags) {
-            this.tags = JSON.parse(tags)
+            this.tags = JSON.parse(decrypt(JSON.parse(tags)))
         }
         if (activeTag) {
-            this.active = JSON.parse(activeTag)
-            const tag = this.tags.find(tag => tag.name === JSON.parse(activeTag))
+            this.active = decrypt(JSON.parse(activeTag))
+            const tag = this.tags.find(tag => tag.name === this.active)
             this.$emit('changeTag', tag.path)
         }
     },
@@ -186,7 +187,7 @@ export default {
     color: #2e93f8;
 }
 
-.active {
+.tag-active {
     color: #2e93f8;
 }
 

@@ -1,5 +1,6 @@
 import CryptoJS from 'crypto-js'
 
+// 此处密钥和偏移量和后端保持一致，可以直接把后端里的密钥和偏移量复制过来
 const KEY = process.env.VUE_APP_KEY
 const IV = process.env.VUE_APP_IV
 

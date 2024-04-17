@@ -6,12 +6,14 @@
     </div>
     <div class="table">
       <el-table :data="tableData" border style="width: 100%">
+        <el-table-column align="center" label="序号" type="index" width="60">
+        </el-table-column>
         <el-table-column v-for="(column, index) in tableColumn" :min-width="column.minWidth" :key="column.prop"
           :fixed="column.fixed" :show-overflow-tooltip="column.showTooltip" :prop="column.prop" :label="column.label"
           align="center">
           <template v-if="column.prop === 'btn'" v-slot="scope">
             <el-button class="btn" v-for="(btn, index) in column.btns" :size='btn.size' :icon="btn.icon"
-              :plain="btn.plain" :type="btn.type" @click="dataClick(scope.row,btn.name)">
+              :plain="btn.plain" :type="btn.type" @click="dataClick(scope.row, btn.name)">
               {{ btn.label }}
             </el-button>
           </template>
@@ -28,7 +30,8 @@
         </el-tooltip>
       </div>
       <el-pagination :page-sizes="pagination.pageSizes" :page-size="pagination.pageSize"
-        layout="sizes, prev, pager, next,jumper" :total="pagination.total" @size-change="handleSizeChange" @current-change="handleCurrentChange">
+        layout="sizes, prev, pager, next,jumper" :total="pagination.total" @size-change="handleSizeChange"
+        @current-change="handleCurrentChange">
       </el-pagination>
       <div class="total">
         <span>共{{ pagination.total }}条记录</span>
@@ -70,7 +73,7 @@ export default {
         type: name,
       })
     },
-    dataClick(data,name) {
+    dataClick(data, name) {
       this.callBackTable({
         type: name,
         data
@@ -81,16 +84,16 @@ export default {
         type: name,
       })
     },
-    handleSizeChange(pageSize){
+    handleSizeChange(pageSize) {
       this.callBackTable({
-        type:'pagination',
-        pageSize:pageSize
+        type: 'pagination',
+        pageSize: pageSize
       })
     },
-    handleCurrentChange(val){
+    handleCurrentChange(val) {
       this.callBackTable({
-        type:'pagination',
-        page:val
+        type: 'pagination',
+        page: val
       })
     },
     callBackTable(params) {

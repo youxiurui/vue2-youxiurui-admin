@@ -72,30 +72,18 @@ router.beforeEach(async (to, from, next) => {
         Message.warning('请先登录')
         next({ name: 'login' })
     } else if (to.path !== '/login' && token) {
-        const base64Url = token.split('.')[1]
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-        const payload = JSON.parse(atob(base64))
-        const exp = payload.exp
-        const now = Math.floor(Date.now() / 1000)
-        if (now > exp) {
-            Message.warning('登录过期，请重新登录')
-            localStorage.clear()
-            sessionStorage.clear()
-            next({ name: 'login' })
-        } else {
-            if (store.state.routes.length === 0) {
-                try {
-                    const res = await reqMenu()
-                    store.commit('SETROUTES', res.data)
-                    resetRouter()
-                    addRouting(res.data)
-                    next({ ...to, replace: true })
-                } catch (error) {
-                    console.log(error)
-                }
-            } else {
-                next()
+        if (store.state.routes.length === 0) {
+            try {
+                const res = await reqMenu()
+                store.commit('SETROUTES', res.data)
+                resetRouter()
+                addRouting(res.data)
+                next({ ...to, replace: true })
+            } catch (error) {
+                console.log(error)
             }
+        } else {
+            next()
         }
     } else {
         next()

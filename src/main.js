@@ -43,7 +43,9 @@ import {
   DescriptionsItem,
   Tag,
   Tree,
-  DatePicker
+  DatePicker,
+  Tabs,
+  TabPane
 } from 'element-ui'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -90,6 +92,8 @@ Vue.use(DescriptionsItem)
 Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(DatePicker)
+Vue.use(Tabs)
+Vue.use(TabPane)
 
 Vue.prototype.$message = Message
 Vue.prototype.$alert = MessageBox
@@ -100,6 +104,7 @@ Vue.config.errorHandler = (err, instance, info) => {
   console.log('错误组件',instance)
   console.log('错误位置',info)
 }
+
 new Vue({
   render: h => h(App),
   store,

@@ -2,7 +2,9 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const router = require('./router')
-const {decode}=require('./utils/jwt')
+const { decode } = require('./utils/jwt')
+
+app.set('trust proxy', true)
 
 app.use(express.json())
 
@@ -20,22 +22,23 @@ app.use((req, res, next) => {
 });
 
 // 鉴权
-const authToken=(req,res,next)=>{
-  let token=req.headers.token
-  if(!decode(token)){
-    return res.status(401).send({
+const authToken = (req, res, next) => {
+  let token = req.headers.token
+  if (!decode(token)) {
+    return res.send({
       code: 401,
-      status:false,
+      status: false,
       message: '请先登录'
     })
   }
   next()
 }
 
-app.use('/user',router.login)
-app.use('/auth',authToken, router.auth)
-app.use('/weather',authToken, router.weather)
-app.use('/table',authToken, router.table)
+app.use('/login', router.login)
+app.use('/register',authToken, router.register)
+app.use('/auth', authToken, router.auth)
+app.use('/weather', authToken, router.weather)
+app.use('/table', authToken, router.table)
 
 
 app.use('/', (req, res) => {

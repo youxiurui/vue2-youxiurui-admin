@@ -50,9 +50,9 @@
 
 <script>
 import headImg from '@/assets/images/head.jpg'
-import { reqWeather } from '@/api'
+import { reqWeather, reqLogOut } from '@/api'
 import { decrypt } from '@/utils/crypto'
-import { isFullscreen,openFullscreen,closeFullscreen } from '@/utils/fullScreen'
+import { isFullscreen, openFullscreen, closeFullscreen } from '@/utils/fullScreen'
 export default {
     data() {
         return {
@@ -91,7 +91,7 @@ export default {
     mounted() {
         const userInfo = localStorage.getItem('userInfo') || sessionStorage.getItem('userInfo')
         if (userInfo) {
-            this.$set(this.userInfo,'username',decrypt(userInfo))
+            this.$set(this.userInfo, 'username', decrypt(userInfo))
         }
     },
     methods: {
@@ -111,10 +111,18 @@ export default {
                 enableHighAccuracy: true
             })
         },
-        exitLogin() {
-            localStorage.clear()
-            sessionStorage.clear()
-            this.$router.push('/login')
+        async exitLogin() {
+            try {
+                const id = localStorage.getItem('conversation') || sessionStorage.getItem('conversation')
+                const res = await reqLogOut({ id: decrypt(id) })
+                if (res.code === 200) {
+                    localStorage.clear()
+                    sessionStorage.clear()
+                    this.$router.push('/login')
+                }
+            } catch (error) {
+                console.log(error)
+            }
         },
         unpack() {
             this.fold = !this.fold
@@ -195,5 +203,4 @@ export default {
 .iconfont {
     font-size: 20px;
 }
-
 </style>

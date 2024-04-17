@@ -41,8 +41,12 @@ export default {
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
         ]
-      }
+      },
+      position: {}
     }
+  },
+  created() {
+    this.getUserLocation()
   },
   methods: {
     async login(formName) {
@@ -54,6 +58,7 @@ export default {
         const res = await reqLogin({
           username: encrypt(this.form.username),
           password: encrypt(this.form.password),
+          position: encrypt(JSON.stringify(this.position))
         })
 
         if (res.code !== 200) {
@@ -63,6 +68,7 @@ export default {
         const storage = this.isRemember ? localStorage : sessionStorage
         storage.setItem('token', res.data.token)
         storage.setItem('userInfo', encrypt(this.form.username))
+        storage.setItem('conversation', encrypt(res.data.id))
 
         const routes = await reqMenu();
         this.$store.commit('SETROUTES', routes.data)
@@ -76,7 +82,22 @@ export default {
       } catch (error) {
         this.$message.error('登录失败，请稍后重试')
       }
+    },
+    getUserLocation() {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(position => {
+          const { longitude, latitude } = position.coords
+          this.position.longitude = longitude
+          this.position.latitude = latitude
+        }, error => {
+          console.log(222)
+          console.log(error)
+        })
+      } else {
+        console.log("浏览器不支持获取地理位置")
+      }
     }
+
   }
 }
 
@@ -84,8 +105,6 @@ export default {
 
 <style scoped>
 #login {
-  /* width: calc(100% - 150px); */
-  /* height: calc(100% - 50px); */
   width: 100%;
   height: 100%;
   min-width: 1200px;

@@ -43,7 +43,10 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      page: 1,
+      pageSize: 10
+    }
   },
   props: {
     tableTitleBtn: {
@@ -85,15 +88,19 @@ export default {
       })
     },
     handleSizeChange(pageSize) {
+      this.pageSize = pageSize
       this.callBackTable({
         type: 'pagination',
-        pageSize: pageSize
+        page: this.page,
+        pageSize: this.pageSize
       })
     },
-    handleCurrentChange(val) {
+    handleCurrentChange(page) {
+      this.page=page
       this.callBackTable({
         type: 'pagination',
-        page: val
+        page: this.page,
+        pageSize: this.pageSize
       })
     },
     callBackTable(params) {

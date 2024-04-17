@@ -15,7 +15,7 @@ router.post('/list/visits', async (req, res) => {
             return
         }
         const data = {
-            total:visits.length,
+            total:0,
             page:page||1,
             pageSize:pageSize||10,
             list:[]
@@ -30,6 +30,9 @@ router.post('/list/visits', async (req, res) => {
         } else {
             data.list = visits[page - 1].slice(0, page * pageSize)
         }
+        visits.forEach(item => {
+            data.total += item.length
+        })
         res.send({
             code: 200,
             msg: 'success',

@@ -8,7 +8,7 @@
         </el-radio-group>
       </div>
       <div class="home-table">
-        <DataTable :tableColumn="tableColumn" :tableData="tableData" />
+        <DataTable :tableColumn="tableColumn" :tableData="tableData" :pagination="pagination" @callBackTable="callBackTable"/>
       </div>
     </div>
   </div>
@@ -60,6 +60,11 @@ export default {
         }
       ],
       tableData: [],
+      pagination: {
+        pageSize: 10,
+        pageSizes: [10, 20, 30, 40],
+        total: 100
+      },
       params:{
         page:1,
         pageSize:10
@@ -84,6 +89,16 @@ export default {
           break
       }
     },
+    callBackTable(params){
+      console.log(params)
+      switch (params.type) {
+        case 'pagination':
+          this.params.page = params.page || 1
+          this.params.pageSize = params.pageSize || 10
+          this.getVisits()
+          break
+      }
+    },
     async getVisits() {
       try {
         const res = await reqVisits(this.params)
@@ -94,6 +109,7 @@ export default {
             data.push(visit)
           })
           this.tableData = data
+          this.pagination.total = res.data.total
         }
       } catch (error) {
         console.log(error)

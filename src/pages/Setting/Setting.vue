@@ -2,29 +2,48 @@
   <div class="setting">
     <div class="set-info">
       <el-descriptions title="系统信息" :column="1" border>
-        <el-descriptions-item label="主机名称">youxiurui</el-descriptions-item>
-        <el-descriptions-item label="操作系统">CentOS 7.9.2009 x86_64(Py3.7.9)</el-descriptions-item>
-        <el-descriptions-item label="系统架构">Unix X64</el-descriptions-item>
-        <el-descriptions-item label="CPU核数">2 核</el-descriptions-item>
-        <el-descriptions-item label="运行时长">44天</el-descriptions-item>
-        <el-descriptions-item label="外网地址">123.249.10.212 | 华北-北京四</el-descriptions-item>
+        <el-descriptions-item label="主机名称">{{ info.system.hostname }}</el-descriptions-item>
+        <el-descriptions-item label="操作系统">{{ info.system.type+' '+info.system.platform }}</el-descriptions-item>
+        <el-descriptions-item label="系统架构">{{ info.system.platform+' '+info.system.arch }}</el-descriptions-item>
+        <el-descriptions-item label="CPU核数">{{ info.system.cpu }}</el-descriptions-item>
+        <el-descriptions-item label="运行时长">{{ info.system.runTime }}天</el-descriptions-item>
+        <el-descriptions-item label="外网地址">{{ info.system.ip }}</el-descriptions-item>
       </el-descriptions>
     </div>
     <div style="flex-grow: 0.1;"></div>
     <div class="use-info">
       <el-descriptions title="使用信息" :column="1" border>
-        <el-descriptions-item label="启动时间">2024-01-18 13:50:39</el-descriptions-item>
-        <el-descriptions-item label="运行时长">13 天 23 小时 40 分 45 秒</el-descriptions-item>
-        <el-descriptions-item label="网站目录">/www/wwwroot/api.qinzhi.xyz/wwwroot</el-descriptions-item>
-        <el-descriptions-item label="开发环境">Production</el-descriptions-item>
-        <el-descriptions-item label="环境变量">非Stage环境</el-descriptions-item>
+        <el-descriptions-item label="启动时间">{{ info.node.startTime }}</el-descriptions-item>
+        <el-descriptions-item label="运行时长">{{ info.node.runTime }}</el-descriptions-item>
+        <el-descriptions-item label="网站目录">{{ info.node.dirname }}</el-descriptions-item>
+        <el-descriptions-item label="开发环境">{{ info.node.environment }}</el-descriptions-item>
       </el-descriptions>
     </div>
   </div>
 </template>
 
 <script>
+import { reqSetting } from '@/api'
 export default {
+  data() {
+    return {
+      info: {
+        system: {},
+        node: {}
+      }
+    }
+  },
+  mounted() {
+    this.getSetting()
+  },
+  methods: {
+    async getSetting() {
+      const res = await reqSetting()
+      if(res.code===200){
+        this.info = res.data
+      }
+    }
+  }
 }
 
 </script>

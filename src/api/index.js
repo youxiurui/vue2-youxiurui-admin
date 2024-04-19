@@ -9,6 +9,7 @@ const URL = {
     weather: '/weather/getWeather',
     getTable: '/table/getTableData',
     addTable: '/table/addTableData',
+    setting: '/setting/os',
 }
 
 export const reqLogin = (params = {}) => request(URL.login, 'POST', params)
@@ -19,3 +20,4 @@ export const reqAddTable = (params) => request(URL.addTable, 'POST', params)
 export const reqOnLines = () => request(URL.registerOnLines, 'GET')
 export const reqVisits = (params) => request(URL.registerVisits, 'POST',params)
 export const reqLogOut = (params) => request(URL.logOut, 'POST', params)
+export const reqSetting = () => request(URL.setting, 'GET')

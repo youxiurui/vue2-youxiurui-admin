@@ -39,6 +39,7 @@ app.use('/register',authToken, router.register)
 app.use('/auth', authToken, router.auth)
 app.use('/weather', authToken, router.weather)
 app.use('/table', authToken, router.table)
+app.use('/setting', authToken, router.setting)
 
 
 app.use('/', (req, res) => {

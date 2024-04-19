@@ -28,7 +28,7 @@
                     <i class="iconfont icon-quanping"></i>
                 </div>
                 <div class="item">
-                    <a href="https://github.com/youxiurui/vue2-youxiurui-admin" style="text-decoration: none;">
+                    <a target="_blank" href="https://github.com/youxiurui/vue2-youxiurui-admin" style="text-decoration: none;">
                         <i class="iconfont icon-github"></i>
                     </a>
                 </div>

@@ -38,6 +38,8 @@
 
 <script>
 import {encrypt,decrypt} from '@/utils/crypto'
+import { getRouters } from '@/router'
+
 export default {
     data() {
         return {
@@ -60,6 +62,7 @@ export default {
     watch: {
         '$route': {
             handler() {
+                console.log(getRouters())
                 const { meta, name } = this.$route
                 this.active = meta.pathName
                 if (!this.tags.find(tag => tag.name === meta.pathName)) {

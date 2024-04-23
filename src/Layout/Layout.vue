@@ -146,4 +146,5 @@ export default {
 .el-aside-transition {
     transition: width 0.3s ease;
 }
+
 </style>

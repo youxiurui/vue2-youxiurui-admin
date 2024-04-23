@@ -1,6 +1,6 @@
 const userTable = new Map()
 
-userTable.set('user', { password: '111111' })
+userTable.set('user', { password: '111111',createTime:'1713702652532',auth:'' })
 
 function getUser(key) {
     return userTable.get(key)

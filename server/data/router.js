@@ -10,6 +10,7 @@ module.exports=[
         component: "pages/Components/index",
         children: [
             {
+                type:'all',
                 path: "tables",
                 name: "tables",
                 meta: {
@@ -19,6 +20,7 @@ module.exports=[
                 component: "pages/Components/Tables/index",
                 children:[
                     {
+                        type:'all',
                         path: "routineTable",
                         name: "routineTable",
                         meta: {
@@ -28,6 +30,7 @@ module.exports=[
                         component: "pages/Components/Tables/RoutineTable/RoutineTable",
                     },
                     {
+                        type:'all',
                         path: "configurableTable",
                         name: "configurableTable",
                         meta: {
@@ -39,6 +42,7 @@ module.exports=[
                 ]
             },
             {
+                type:'all',
                 path: "forms",
                 name: "forms",
                 meta: {
@@ -48,6 +52,7 @@ module.exports=[
                 component: "pages/Components/Forms/index",
                 children:[
                     {
+                        type:'all',
                         path: "routineForm",
                         name: "routineForm",
                         meta: {
@@ -71,6 +76,7 @@ module.exports=[
         component: "pages/AuthManage/index",
         children: [
             {
+                type:'all',
                 path: "btnAuth",
                 name: "btnAuth",
                 meta: {
@@ -78,6 +84,16 @@ module.exports=[
                     icon: "icon-anniu",
                 },
                 component: "pages/AuthManage/BtnAuth/BtnAuth",
+            },
+            {
+                type:'admin',
+                path: "menuAuth",
+                name: "menuAuth",
+                meta: {
+                    pathName: "菜单权限",
+                    icon: "icon-anniu",
+                },
+                component: "pages/AuthManage/MenuAuth/MenuAuth",
             }
         ]
     },

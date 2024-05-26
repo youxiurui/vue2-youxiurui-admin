@@ -1,10 +1,10 @@
-export function isFullscreen() {
+function isFullscreen() {
     return document.fullscreenElement != null ||
         document.mozFullScreenElement != null ||
         document.webkitFullscreenElement != null ||
         document.msFullscreenElement != null
 }
-export function openFullscreen() {
+function openFullscreen() {
     if (document.documentElement.requestFullscreen) {
         document.documentElement.requestFullscreen()
     } else if (document.documentElement.mozRequestFullScreen) {
@@ -15,7 +15,7 @@ export function openFullscreen() {
         document.documentElement.msRequestFullscreen()
     }
 }
-export function closeFullscreen() {
+function closeFullscreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen()
     } else if (document.mozCancelFullScreen) {
@@ -25,4 +25,10 @@ export function closeFullscreen() {
     } else if (document.msExitFullscreen) {
         document.msExitFullscreen()
     }
+}
+
+export {
+    isFullscreen,
+    openFullscreen,
+    closeFullscreen
 }
